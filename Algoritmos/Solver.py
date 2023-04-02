@@ -1,5 +1,8 @@
 import heapq
 from random import randint
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+import numpy as np
 
 class Solver(object):
     def __init__(self, truckMatrix, droneMatrix, nodes, st, sr, endurance):
@@ -36,6 +39,22 @@ class Solver(object):
     def setSolution(self, solution):
         self.__solution = solution
 
+    def getNodes(self):
+        return self.__nodes
+
+    def getCoordP(self, point):
+        #for i in range(len(self.__solution)):
+        #    if i == self.__solution[index][0]
+
+        return self.__nodes[point][0]
+
+    def getCoordX(self, point):
+        return self.__nodes[point][1]
+
+    def getCoordY(self, point):
+            return self.__nodes[point][2]
+
+ 
     def getTotalTime(self):
         return self.__time
 
@@ -125,12 +144,17 @@ class Solver(object):
             self.__solution.append(closest[index][1]) # Adiciona na solução
             self.__time += float(closest[index][0]) # Acrescenta a distância
             count += 1
-        print(self.__solution)
         lastInsert = self.__solution[-1]
         self.__solution.append(int(self.__nodes[-1][0])) # Adiciona o depósito, para fechar o ciclo
+        
+        print(self.__solution) # plotar a solução apos esse passo
+        print(self.__nodes)
+
         self.__time += float(self.__truckMatrix[lastInsert][0])
         self.__time = round(self.__time,2)
+
         return self.__time
+
         # print(len(self.__solution))
         # print(self.__solution)
         # print(self.__time)
@@ -601,6 +625,68 @@ class Solver(object):
         return self.__time
         # print(f'Truck Nodes: {len(truckSolution)} | Drone Nodes: {len(droneSolution)} | TSP Solution: {len(self.__solution)}')
 
+## ======= Plotagem da solucao em grafo ======
+    def plotar(self, plt):
+        plt.show()
+
+    def plotSol(self, sol, ax, color):
+        # Prepara os pontos pertencentes a solução para inserir no gráfico
+        point = []
+        x = []
+        y = []
+        for i in self.__solution:
+            point.append(self.getCoordP(i))
+            x.append(self.getCoordX(i))
+            y.append(self.getCoordY(i))
+            
+
+            # Enumera todos os pontos do gráfico de acordo com seus respectivos numeros
+            if i in self.__solution:
+                plt.text(self.getCoordX(i), self.getCoordY(i), str(i), fontsize='medium')
+
+        # Plota os pontos pertencentes a solução no gráfico
+        ax.plot(x, y, marker='o', color=color)
+
+
+    def plotAllPoints(self, ax):
+        # Prepara os demais pontos para inserir no gráfico
+        point = []
+        x = []
+        y = []
+        for i in self.__nodes:
+            point.append(self.getCoordP(i))
+            x.append(self.getCoordX(i))
+            y.append(self.getCoordY(i))
+
+            # Plota os demais pontos no gráfico
+            #ax.scatter(x[i], y[i], marker='o', color='red')
+
+    def plotarSolucao(self, nome_do_arquivo):
+
+        # Define o tamanho do gráfico a ser gerado
+        fig, ax = plt.subplots(figsize=(10, 6))
+
+        solution = self.getSolution()
+
+        #self.plotAllPoints(ax)
+
+        self.plotSol(solution, ax, 'blue')
+
+        # Título do gráfico
+        titulo = 'Solução da para ' + \
+            nome_do_arquivo + '\nTempo Total k = ' + str(self.__time)
+        ax.set(title=titulo, xlabel="Coordenadas x", ylabel="Coordenadas y")
+
+        # Salva o gráfico como pdf no diretório do projeto
+        posFormat = nome_do_arquivo.find('.')
+
+        nome = 'Solução  para' + nome_do_arquivo[:posFormat] + '.pdf'
+        plt.savefig(nome, format='pdf')
+        self.plotar(plt)
+        return plt
+
+
+## funcao auxiliar
 def randomizeLocalSearchs():
     localSearchs = []
     availableValues = [1, 2, 3]
