@@ -24,9 +24,12 @@ for folder in folders: # Percorre os diretórios da pasta raiz
 
     startTime = time.time()
     solver.HVMP(1)
+    solver.plotarSolucao(sheetName)
     solver.getDroneDeliveries()
     result = solver.droneGrasp(100,1)
     endTime = time.time()
+
+    solver.plotarSolucao(sheetName)
 
     sheet1.append((folder, result, endTime - startTime))
     sheet.save(sheetName + '.xlsx')

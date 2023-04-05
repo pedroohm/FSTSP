@@ -33,6 +33,9 @@ class Solver(object):
         self.__truckSolution = []
         self.__representation = []
 
+    def getRepresentation(self):
+        return self.__representation
+
     def getSolution(self):
         return self.__solution
     
@@ -43,9 +46,6 @@ class Solver(object):
         return self.__nodes
 
     def getCoordP(self, point):
-        #for i in range(len(self.__solution)):
-        #    if i == self.__solution[index][0]
-
         return self.__nodes[point][0]
 
     def getCoordX(self, point):
@@ -54,7 +54,6 @@ class Solver(object):
     def getCoordY(self, point):
             return self.__nodes[point][2]
 
- 
     def getTotalTime(self):
         return self.__time
 
@@ -153,13 +152,13 @@ class Solver(object):
         self.__time += float(self.__truckMatrix[lastInsert][0])
         self.__time = round(self.__time,2)
 
-        return self.__time
-
         # print(len(self.__solution))
         # print(self.__solution)
         # print(self.__time)
         # self.calcDist()
         # print(self.__time)
+
+        return self.__time
 
     def localSearchSwap(self):
         better = True
@@ -246,7 +245,6 @@ class Solver(object):
                 k+=1
         return self.__time
 
-
     # DLS = Drone Local Search
     def DLSSwap(self):
         better = True
@@ -266,7 +264,6 @@ class Solver(object):
             self.__solution = bestSolution
             self.__time = bestTime
         return self.__time
-
 
     def DLSFullSwap(self):
         better = True
@@ -292,7 +289,6 @@ class Solver(object):
             self.__time = bestTime
         return self.__time
 
-
     def DLSInsertion(self):
         better = True
         while better:
@@ -314,7 +310,6 @@ class Solver(object):
             self.__time = bestTime
             self.__solution = bestSol
         return self.__time
-
 
     def DLSFullInsertion(self):
         better = True
@@ -346,7 +341,6 @@ class Solver(object):
             self.__representation = bestRepresentation
         return self.__time
         
-
     def DLSOneRemove(self):
         better = True
         while better:
@@ -365,7 +359,6 @@ class Solver(object):
             self.__time = bestTime
             self.__representation = bestRepresentation
         return self.__time
-
 
     def DLSOneAdd(self):
         better = True
@@ -386,7 +379,6 @@ class Solver(object):
             self.__representation = bestRepresentation
         return self.__time
 
-
     def DLS2OPT(self):
         better = True
         while better:
@@ -405,7 +397,6 @@ class Solver(object):
             self.__time = bestTime
             self.__solution = bestSol  
         return self.__time
-
 
     def DLSFull2OPT(self):
         better = True
@@ -471,7 +462,6 @@ class Solver(object):
             else:
                 k += 1 
         return self.__time
-
 
     def droneGrasp(self, repeat, m):
         cont = 0
@@ -634,56 +624,98 @@ class Solver(object):
         point = []
         x = []
         y = []
-        for i in self.__solution:
+        for i in sol:
             point.append(self.getCoordP(i))
             x.append(self.getCoordX(i))
             y.append(self.getCoordY(i))
             
-
             # Enumera todos os pontos do gráfico de acordo com seus respectivos numeros
-            if i in self.__solution:
+            if i in sol:
                 plt.text(self.getCoordX(i), self.getCoordY(i), str(i), fontsize='medium')
 
         # Plota os pontos pertencentes a solução no gráfico
         ax.plot(x, y, marker='o', color=color)
 
 
-    def plotAllPoints(self, ax):
+    def plotAllPoints(self, nodes, ax):
         # Prepara os demais pontos para inserir no gráfico
         point = []
         x = []
         y = []
-        for i in self.__nodes:
+        for i in range (len(nodes)):
             point.append(self.getCoordP(i))
             x.append(self.getCoordX(i))
             y.append(self.getCoordY(i))
 
             # Plota os demais pontos no gráfico
-            #ax.scatter(x[i], y[i], marker='o', color='red')
+        ax.scatter(x, y, marker='o', color='green')
 
-    def plotarSolucao(self, nome_do_arquivo):
+    # chamar a funcao com apenas um parametro para ver a solucao inicial
+    # apos fazer split, chamar a funcao com num aleatorio no segundo parametro
+    # ira imprimir a rota do caminhão e drone
+    def plotarSolucao(self, nome_do_arquivo, rep=None):
 
         # Define o tamanho do gráfico a ser gerado
         fig, ax = plt.subplots(figsize=(10, 6))
 
         solution = self.getSolution()
-
-        #self.plotAllPoints(ax)
-
-        self.plotSol(solution, ax, 'blue')
+        if rep != None:
+            representation = self.getRepresentation()
+            truck = self.__truckSolution.copy()
+            self.plotSol(truck, ax, 'blue')
+            self.plotDroneRoute(solution, representation, ax, 'red')
+        else:
+            self.plotSol(solution, ax, 'blue')
 
         # Título do gráfico
-        titulo = 'Solução da para ' + \
+        titulo = 'Solução para ' + \
             nome_do_arquivo + '\nTempo Total k = ' + str(self.__time)
         ax.set(title=titulo, xlabel="Coordenadas x", ylabel="Coordenadas y")
 
         # Salva o gráfico como pdf no diretório do projeto
         posFormat = nome_do_arquivo.find('.')
 
-        nome = 'Solução  para' + nome_do_arquivo[:posFormat] + '.pdf'
+        nome = 'Solução para' + nome_do_arquivo[:posFormat] + '.pdf'
         plt.savefig(nome, format='pdf')
         self.plotar(plt)
         return plt
+
+    # traça a rota do drone na saida de vermelho
+    def plotDroneRoute(self, solution, representation, ax, color):
+        aux = [] #vetor para guardar os pontos de lancamento e recolha do drone que pertencem a solucao
+        droneLauched = False
+        drones = self.__droneSolution.copy()
+        truck = self.__truckSolution.copy()
+
+        print(self.getSolution())
+        print(representation)
+        print(truck)
+        print(drones)
+
+        for i in range (len(representation)):
+            # obtem ponto de lancamento e ponto que sera atendido pelo drone
+            if (representation[i] == 1) and (droneLauched == False):
+                droneLauched = True
+                aux.append(solution[i-1])
+                aux.append(solution[i])
+
+            # obtem ponto de recolha do drone
+            elif (representation[i] == 0) and (droneLauched == True):
+                droneLauched = False
+                aux.append(solution[i])
+                point = []
+                x = []
+                y = []
+                for i in aux:
+                    point.append(self.getCoordP(i))
+                    x.append(self.getCoordX(i))
+                    y.append(self.getCoordY(i))
+                ax.plot(x, y, marker='o', color=color)
+
+                aux.clear()
+                point.clear()
+                x.clear()
+                y.clear()
 
 
 ## funcao auxiliar
