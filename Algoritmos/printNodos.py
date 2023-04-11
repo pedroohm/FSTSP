@@ -22,15 +22,21 @@ for folder in folders: # Percorre os diretórios da pasta raiz
 
     solver = Solver(reader.getTruckMatrix(), reader.getDroneMatrix(), reader.getNodes(), 1, 1, 20)
 
+    print(solver.getNodes())
+
     startTime = time.time()
     solver.HVMP(1)
-    solver.plotarSolucao(sheetName +' inicial ')
-    solver.getDroneDeliveries()
-    result = solver.droneGrasp(3,1)
+    result = solver.droneGrasp(2,1)
     endTime = time.time()
 
+    print('Representation: ', solver.getRepresentation())
+    print('Drone Solution: ', solver.__droneSolution)
+    print('Drone Deliveries: ', solver.__droneDeliveries)
+
+    '''
     solver.plotarSolucao(sheetName +' final ')
     solver.plotarSolucao(sheetName +' drones ', 2)
+    '''
 
     sheet1.append((folder, result, endTime - startTime))
     sheet.save(sheetName + '.xlsx')

@@ -617,7 +617,9 @@ class Solver(object):
 
 ## ======= Plotagem da solucao em grafo ======
     def plotar(self, plt):
-        plt.show()
+        plt.show(block=False)
+        plt.pause(5)
+        plt.close()
 
     def plotSol(self, sol, ax, color):
         # Prepara os pontos pertencentes a solução para inserir no gráfico
@@ -684,13 +686,13 @@ class Solver(object):
     def plotDroneRoute(self, solution, representation, ax, color):
         aux = [] #vetor para guardar os pontos de lancamento e recolha do drone que pertencem a solucao
         droneLauched = False
-        drones = self.__droneSolution.copy()
+        drones = self.__droneSolution
         truck = self.__truckSolution.copy()
 
-        print(self.getSolution())
-        print(representation)
-        print(truck)
-        print(drones)
+        print('Solution: ', self.getSolution())
+        print('Representation: ', representation)
+        print('Truck: ',truck)
+        print('Drones: ',drones)
 
         for i in range (len(representation)):
             # obtem ponto de lancamento e ponto que sera atendido pelo drone
