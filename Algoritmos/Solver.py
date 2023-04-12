@@ -472,14 +472,14 @@ class Solver(object):
         while cont < repeat:
             self.__solution = []
             self.HVMP(m)
-            self.plotarSolucao('HVMP '+str(cont))
+            self.plotarSolucao('HVMP '+ str(cont) + ' ')
             self.RVND()
-            self.plotarSolucao('RVND '+str(cont))
+            self.plotarSolucao('RVND '+str(cont) + ' ')
             self.split2()
             self.createRepresentation()
-            self.plotarSolucao('createRepresentation '+str(cont), 2)
+            self.plotarSolucao('createRepresentation '+str(cont) + ' ', 2)
             self.droneRVND()
-            self.plotarSolucao('droneRVND '+str(cont), 2)
+            self.plotarSolucao('droneRVND '+str(cont) + ' ', 2)
             cont += 1
             if self.__time < bestTime or bestTime == -1:
                 bestTime = self.__time
@@ -687,7 +687,9 @@ class Solver(object):
         # Salva o gráfico como pdf no diretório do projeto
         posFormat = nome_do_arquivo.find('.')
 
-        nome = 'Solução para' + nome_do_arquivo[:posFormat] + '.pdf'
+        #nome = 'Solução para' + nome_do_arquivo[:posFormat] + '.pdf'
+
+        nome = 'Solução ' + nome_do_arquivo + '.pdf'
         plt.savefig(nome, format='pdf')
         self.plotar(plt)
         return plt

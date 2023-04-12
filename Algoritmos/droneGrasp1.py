@@ -25,7 +25,7 @@ for folder in folders: # Percorre os diretórios da pasta raiz
     startTime = time.time()
     solver.HVMP(1)
     solver.getDroneDeliveries()
-    result = solver.droneGrasp(3,2)
+    result = solver.droneGrasp(3,4)
     endTime = time.time()
 
     sheet1.append((folder, result, endTime - startTime))
