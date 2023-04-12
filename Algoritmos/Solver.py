@@ -463,6 +463,7 @@ class Solver(object):
                 k += 1 
         return self.__time
 
+    # adicionado: plotar solução a cada movimento do grasp
     def droneGrasp(self, repeat, m):
         cont = 0
         bestTime = -1
@@ -471,10 +472,14 @@ class Solver(object):
         while cont < repeat:
             self.__solution = []
             self.HVMP(m)
+            self.plotarSolucao('HVMP '+str(cont))
             self.RVND()
+            self.plotarSolucao('RVND '+str(cont))
             self.split2()
             self.createRepresentation()
+            self.plotarSolucao('createRepresentation '+str(cont), 2)
             self.droneRVND()
+            self.plotarSolucao('droneRVND '+str(cont), 2)
             cont += 1
             if self.__time < bestTime or bestTime == -1:
                 bestTime = self.__time
@@ -483,6 +488,9 @@ class Solver(object):
         self.__time = bestTime
         self.__solution = bestSol
         self.__representation = bestRepresentation
+
+        print('Tempo da solução ótima: ', self.__time)
+
         return self.__time
 
     def getDroneDeliveries(self):
@@ -587,7 +595,7 @@ class Solver(object):
             i1Index = self.__solution.index(s[i + 1])
             if iIndex + 1 != i1Index:
                 droneNode = self.getDroneNode(T, s[i], s[i + 1])
-                droneSolution.append((s[i], droneNode, s[i + 1]))
+                droneSolution.append([s[i], droneNode, s[i + 1]])
 
         currentNode = 0
         while currentNode != self.__solution[-1]:
@@ -618,9 +626,11 @@ class Solver(object):
 ## ======= Plotagem da solucao em grafo ======
     def plotar(self, plt):
         plt.show(block=False)
-        plt.pause(5)
+        plt.pause(10)
         plt.close()
 
+    # A chamada para a plotagem pode ser feita passando-se
+    # a solução incial(solution) ou a final (truckSolution)
     def plotSol(self, sol, ax, color):
         # Prepara os pontos pertencentes a solução para inserir no gráfico
         point = []
@@ -684,6 +694,78 @@ class Solver(object):
 
     # traça a rota do drone na saida de vermelho
     def plotDroneRoute(self, solution, representation, ax, color):
+        # Prepara os pontos pertencentes a rota do drone para inserir no gráfico
+        drones = self.__droneSolution
+        droneLauched = False
+        aux = []
+
+        '''
+        for i in range (0, len(representation)):
+            # obtem ponto de lancamento e ponto que sera atendido pelo drone
+            if (representation[i] == 1) and (droneLauched == False):
+                droneLauched = True
+                aux.append(solution[i-1])
+                aux.append(solution[i])
+
+            # obtem ponto de recolha do drone
+            elif (representation[i] == 0) and (droneLauched == True):
+                droneLauched = False
+                aux.append(solution[i])
+                point = []
+                x = []
+                y = []
+                for i in aux:
+                    point.append(self.getCoordP(i))
+                    x.append(self.getCoordX(i))
+                    y.append(self.getCoordY(i))
+                ax.plot(x, y, marker='o', color=color)
+
+                aux.clear()
+                point.clear()
+                x.clear()
+                y.clear()
+        '''
+        # Alternativo
+
+        point = []
+        x = []
+        y = []       
+        for i in range (0, len(drones)):
+            for j in drones[i]:
+                point.append(self.getCoordP(j))
+                x.append(self.getCoordX(j))
+                y.append(self.getCoordY(j))
+
+                # Enumera todos os pontos do gráfico de acordo com seus respectivos numeros
+                if j in drones[i]:
+                    plt.text(self.getCoordX(j), self.getCoordY(j), str(j), fontsize='medium')
+        ax.plot(x, y, marker='o', color=color)
+        
+
+        # O que esta sendo impresso no grafico
+        print()
+        print('Solution: ', self.getSolution())
+        print('Representation: ', representation)
+        print('Truck: ', self.__truckSolution)
+        print('Drones: ', drones)
+        print()               
+            
+        '''
+            point.append(self.getCoordP(i[0]))
+            x.append(self.getCoordX(i[0]))
+            y.append(self.getCoordY(i[0]))
+
+            point.append(self.getCoordP(i[1]))
+            x.append(self.getCoordX(i[1]))
+            y.append(self.getCoordY(i[1]))
+
+            point.append(self.getCoordP(i[2]))
+            x.append(self.getCoordX(i[2]))
+            y.append(self.getCoordY(i[2]))
+        '''
+    
+    '''
+    def plotDroneRoute(self, solution, representation, ax, color):
         aux = [] #vetor para guardar os pontos de lancamento e recolha do drone que pertencem a solucao
         droneLauched = False
         drones = self.__droneSolution
@@ -718,6 +800,7 @@ class Solver(object):
                 point.clear()
                 x.clear()
                 y.clear()
+    '''
 
 
 ## funcao auxiliar
