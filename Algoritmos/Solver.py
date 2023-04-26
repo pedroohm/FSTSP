@@ -702,34 +702,6 @@ class Solver(object):
         droneLauched = False
         aux = []
 
-        '''
-        for i in range (0, len(representation)):
-            # obtem ponto de lancamento e ponto que sera atendido pelo drone
-            if (representation[i] == 1) and (droneLauched == False):
-                droneLauched = True
-                aux.append(solution[i-1])
-                aux.append(solution[i])
-
-            # obtem ponto de recolha do drone
-            elif (representation[i] == 0) and (droneLauched == True):
-                droneLauched = False
-                aux.append(solution[i])
-                point = []
-                x = []
-                y = []
-                for i in aux:
-                    point.append(self.getCoordP(i))
-                    x.append(self.getCoordX(i))
-                    y.append(self.getCoordY(i))
-                ax.plot(x, y, marker='o', color=color)
-
-                aux.clear()
-                point.clear()
-                x.clear()
-                y.clear()
-        '''
-        # Alternativo
-
         point = []
         x = []
         y = []       
@@ -752,58 +724,7 @@ class Solver(object):
         print('Truck: ', self.__truckSolution)
         print('Drones: ', drones)
         print()               
-            
-        '''
-            point.append(self.getCoordP(i[0]))
-            x.append(self.getCoordX(i[0]))
-            y.append(self.getCoordY(i[0]))
-
-            point.append(self.getCoordP(i[1]))
-            x.append(self.getCoordX(i[1]))
-            y.append(self.getCoordY(i[1]))
-
-            point.append(self.getCoordP(i[2]))
-            x.append(self.getCoordX(i[2]))
-            y.append(self.getCoordY(i[2]))
-        '''
     
-    '''
-    def plotDroneRoute(self, solution, representation, ax, color):
-        aux = [] #vetor para guardar os pontos de lancamento e recolha do drone que pertencem a solucao
-        droneLauched = False
-        drones = self.__droneSolution
-        truck = self.__truckSolution.copy()
-
-        print('Solution: ', self.getSolution())
-        print('Representation: ', representation)
-        print('Truck: ',truck)
-        print('Drones: ',drones)
-
-        for i in range (len(representation)):
-            # obtem ponto de lancamento e ponto que sera atendido pelo drone
-            if (representation[i] == 1) and (droneLauched == False):
-                droneLauched = True
-                aux.append(solution[i-1])
-                aux.append(solution[i])
-
-            # obtem ponto de recolha do drone
-            elif (representation[i] == 0) and (droneLauched == True):
-                droneLauched = False
-                aux.append(solution[i])
-                point = []
-                x = []
-                y = []
-                for i in aux:
-                    point.append(self.getCoordP(i))
-                    x.append(self.getCoordX(i))
-                    y.append(self.getCoordY(i))
-                ax.plot(x, y, marker='o', color=color)
-
-                aux.clear()
-                point.clear()
-                x.clear()
-                y.clear()
-    '''
 
 
 ## funcao auxiliar

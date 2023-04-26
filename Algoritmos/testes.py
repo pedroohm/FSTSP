@@ -26,7 +26,8 @@ for folder in folders: # Percorre os diretórios da pasta raiz
     solver.HVMP(1)
     solver.plotarSolucao(sheetName +' inicial ')
     solver.getDroneDeliveries()
-    result = solver.droneGrasp(3,1)
+    solver.split2()
+    result = solver.droneGrasp(2,1)
     endTime = time.time()
 
     solver.plotarSolucao(sheetName +' final ')

@@ -2,7 +2,7 @@ from TSPDReader import TSPDReader1
 from Solver import Solver
 from openpyxl import Workbook
 
-import os, sys
+import os
 import time
 
 
