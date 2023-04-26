@@ -38,6 +38,7 @@ Thumbs.db
 
 # Output tests #
 ######################
+*.pdf
 *.xlsx
 
 # Program tests #
