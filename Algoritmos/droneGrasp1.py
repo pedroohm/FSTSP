@@ -2,7 +2,7 @@ from TSPDReader import TSPDReader1
 from Solver import Solver
 from openpyxl import Workbook
 
-import os
+import os, sys
 import time
 
 
@@ -25,8 +25,12 @@ for folder in folders: # Percorre os diretórios da pasta raiz
     startTime = time.time()
     solver.HVMP(1)
     solver.getDroneDeliveries()
-    result = solver.droneGrasp(3,4)
+    print('Inicio: ', folder)
+    result = solver.droneGrasp(2,1)
+    print('Final: ', folder)
     endTime = time.time()
+
+    solver.plotarSolucao(folder + ' droneGrasp ', 2)
 
     sheet1.append((folder, result, endTime - startTime))
     sheet.save(sheetName + '.xlsx')

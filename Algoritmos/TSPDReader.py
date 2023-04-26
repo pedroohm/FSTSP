@@ -2,6 +2,7 @@ import os
 
 from numpy import linspace
 
+
 class TSPDReader(object):
 
     directory = './tsplib_generated_instances' # Atributo estático
@@ -91,7 +92,7 @@ class TSPDReader1(object):
         return self.__droneDeliveries
 
     def read(self,folder):
-        subFolder = TSPDReader.directory + '//' + folder
+        subFolder = TSPDReader1.directory + '//' + folder
         # print(subFolder)
         for filename in os.listdir(subFolder): # Percorre os arquivos dentro do sub-diretório
             if(folder + '.tsp' == filename): # Evitar a leitura do tsp

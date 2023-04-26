@@ -63,11 +63,12 @@ class Solver(object):
     def getDroneTime(self, i, j, k):
         return float(self.__droneMatrix[self.__solution[i]][self.__solution[j]]) + float(self.__droneMatrix[self.__solution[j]][self.__solution[k]]) 
 
+
     def calcDist(self):
         self.__time = 0;
         for i in range(len(self.__solution) - 1):
             # print(self.__solution[i], " - ", self.__solution[i+1], " | ",self.__truckMatrix[self.__solution[i]][self.__solution[i + 1]]);
-            print(len(self.__nodes), " - ", i)
+            # print(len(self.__nodes), " - ", i)
             self.__time += float(self.__truckMatrix[self.__solution[i]][self.__solution[i + 1]])
 
     def createRepresentation(self):
@@ -128,7 +129,7 @@ class Solver(object):
         if(i != j - 1):
             self.__time = self.__time - self.getTime(j-1,j)
             self.__time = self.__time + self.getTime(j-1,i)
-        print("TESTE:" , self.__time)
+        #print("TESTE:" , self.__time)
 
     # Heurísitca do vizinho mais próximo com escolhas aleatórias. Utilizar m = 1 para a versão tradicional.
     def HVMP(self, m):
@@ -146,8 +147,8 @@ class Solver(object):
         lastInsert = self.__solution[-1]
         self.__solution.append(int(self.__nodes[-1][0])) # Adiciona o depósito, para fechar o ciclo
         
-        print(self.__solution) # plotar a solução apos esse passo
-        print(self.__nodes)
+        #print(self.__solution) # plotar a solução apos esse passo
+        #print(self.__nodes)
 
         self.__time += float(self.__truckMatrix[lastInsert][0])
         self.__time = round(self.__time,2)
@@ -438,7 +439,7 @@ class Solver(object):
         while k <= attempts:
             bestTime = self.__time
             chosenDLS = DLS.pop()
-            print("CHAMANDO DLS: ", chosenDLS, " | VALOR: ", bestTime)
+            #print("CHAMANDO DLS: ", chosenDLS, " | VALOR: ", bestTime)
             # print("SOL: ", self.__representation)
             if chosenDLS == 0:
                 self.DLSSwap()
@@ -472,14 +473,14 @@ class Solver(object):
         while cont < repeat:
             self.__solution = []
             self.HVMP(m)
-            self.plotarSolucao('HVMP '+ str(cont) + ' ')
+            #self.plotarSolucao('HVMP '+ str(cont) + ' ')
             self.RVND()
-            self.plotarSolucao('RVND '+str(cont) + ' ')
+            #self.plotarSolucao('RVND '+str(cont) + ' ')
             self.split2()
             self.createRepresentation()
-            self.plotarSolucao('createRepresentation '+str(cont) + ' ', 2)
+            #self.plotarSolucao('createRepresentation '+str(cont) + ' ', 2)
             self.droneRVND()
-            self.plotarSolucao('droneRVND '+str(cont) + ' ', 2)
+            #self.plotarSolucao('droneRVND '+str(cont) + ' ', 2)
             cont += 1
             if self.__time < bestTime or bestTime == -1:
                 bestTime = self.__time
@@ -489,7 +490,7 @@ class Solver(object):
         self.__solution = bestSol
         self.__representation = bestRepresentation
 
-        print('Tempo da solução ótima: ', self.__time)
+        #print('Tempo da solução ótima: ', self.__time)
 
         return self.__time
 
