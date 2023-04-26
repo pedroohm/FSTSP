@@ -38,10 +38,7 @@ Thumbs.db
 
 # Output tests #
 ######################
-*.pdf
 *.xlsx
 
 # Program tests #
 ######################
-ponto.py
-plotar.py
