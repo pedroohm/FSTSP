@@ -490,7 +490,7 @@ class Solver(object):
         self.__solution = bestSol
         self.__representation = bestRepresentation
 
-        #print('Tempo da solução ótima: ', self.__time)
+        print('Tempo da solução ótima: ', self.__time)
 
         return self.__time
 
@@ -622,7 +622,7 @@ class Solver(object):
         self.createRepresentation()
         self.__time = self.calculateTime()
         return self.__time
-        # print(f'Truck Nodes: {len(truckSolution)} | Drone Nodes: {len(droneSolution)} | TSP Solution: {len(self.__solution)}')
+        print(f'Truck Nodes: {len(truckSolution)} | Drone Nodes: {len(droneSolution), droneSolution} | TSP Solution: {len(self.__solution)}')
 
 ## ======= Plotagem da solucao em grafo ======
     def plotar(self, plt):
@@ -724,8 +724,6 @@ class Solver(object):
         print('Truck: ', self.__truckSolution)
         print('Drones: ', drones)
         print()               
-    
-
 
 ## funcao auxiliar
 def randomizeLocalSearchs():
@@ -736,3 +734,5 @@ def randomizeLocalSearchs():
         localSearchs.append(availableValues.pop(newInsert))
 
     return localSearchs
+
+
