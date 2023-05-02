@@ -626,9 +626,11 @@ class Solver(object):
 
 ## ======= Plotagem da solucao em grafo ======
     def plotar(self, plt):
-        plt.show(block=False)
+        plt.show()
+        '''
         plt.pause(10)
         plt.close()
+        '''
 
     # A chamada para a plotagem pode ser feita passando-se
     # a solução incial(solution) ou a final (truckSolution)
@@ -691,7 +693,7 @@ class Solver(object):
         #nome = 'Solução para' + nome_do_arquivo[:posFormat] + '.pdf'
 
         nome = 'Solução ' + nome_do_arquivo + '.pdf'
-        plt.savefig(nome, format='pdf')
+        #plt.savefig(nome, format='pdf')
         self.plotar(plt)
         return plt
 

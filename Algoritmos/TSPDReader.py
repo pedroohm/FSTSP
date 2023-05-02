@@ -109,6 +109,7 @@ class TSPDReader1(object):
         file = open(fullPath, 'r')
         lines = file.readlines()
         normalize = False
+        self.__nodes == []
         for line in lines:
             line = stringToIntArray(line)
             if(self.__nodes == []):
@@ -116,6 +117,9 @@ class TSPDReader1(object):
                 if(firstId == 1):
                     normalize = True
                     self.__nodes.append([firstId - 1, float(line[1].strip()), float(line[2].strip()), int(line[3].strip())])
+                else:
+                    self.__nodes.append([int(line[0].strip()), float(line[1].strip()), float(line[2].strip()), int(line[3].strip())])
+    
             elif(normalize):
                 self.__nodes.append([int(line[0].strip()) - 1, float(line[1].strip()), float(line[2].strip()), int(line[3].strip())])
             else:
