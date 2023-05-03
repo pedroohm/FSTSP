@@ -66,9 +66,15 @@ class Solver(object):
 
     def calcDist(self):
         self.__time = 0;
+        '''
+        print('Tamanhos: solution, nodes, truck ')
+        print(len(self.__solution))
+        print(len(self.__nodes))
+        print(len(self.__truckMatrix))
+        '''
         for i in range(len(self.__solution) - 1):
-            # print(self.__solution[i], " - ", self.__solution[i+1], " | ",self.__truckMatrix[self.__solution[i]][self.__solution[i + 1]]);
-            # print(len(self.__nodes), " - ", i)
+            #print(self.__solution[i], " - ", self.__solution[i+1], " | ",self.__truckMatrix[self.__solution[i]][self.__solution[i + 1]]);
+            #print(len(self.__nodes), " - ", i)
             self.__time += float(self.__truckMatrix[self.__solution[i]][self.__solution[i + 1]])
 
     def createRepresentation(self):
@@ -119,9 +125,29 @@ class Solver(object):
         size = len(self.__nodes) - 1
         for j in range(size):
             if self.__nodes[j][0] not in self.__solution and j != lastInsert:
+                #print("\n",(self.__truckMatrix[lastInsert][j], self.__nodes[j][0]))
                 heapq.heappush(pq, (self.__truckMatrix[lastInsert][j], self.__nodes[j][0]))
-        closest = heapq.nsmallest(num_points, pq)
+        #closest = heapq.nsmallest(num_points, pq)
+        #print("closest: ",closest)
+        
+        ordenado = sorted(pq, key=lambda pq: int(pq[0]))
+        closest = []
+        
+        '''
+        for i in range(0,num_points):
+            if len(self.__solution) == len(self.__nodes)-num_points:
+                closest.extend(ordenado[:num_points])
+                break
+            closest.append(ordenado[i])
+            print(ordenado)
+            print(closest)
+            print(len(self.__solution), len(self.__nodes))
+        '''
+
+        closest.extend(ordenado[:num_points])
+        print(ordenado, closest)
         return closest
+
 
     def adjustTimeSwap(self, i, j):
         self.__time = self.__time - self.getTime(i-1,i) - self.getTime(i, i+1) - self.getTime(j,j+1)
@@ -140,7 +166,7 @@ class Solver(object):
             m1 = min(len(closest), m) # Trata a questão de não existir m pontos que não estão na solução
             index = randint(0, m1 - 1) # Define o indice do ponto que será inserido
             lastInsert = self.__solution[-1] # Recupera o último ponto a ser inserido
-            # print(self.__solution[-1], " - ", closest[index][1], " | ",closest[index][0]);
+            #print(self.__solution[-1], " - ", closest[index][1], " | ",closest[index][0]);
             self.__solution.append(closest[index][1]) # Adiciona na solução
             self.__time += float(closest[index][0]) # Acrescenta a distância
             count += 1
@@ -626,7 +652,7 @@ class Solver(object):
 
 ## ======= Plotagem da solucao em grafo ======
     def plotar(self, plt):
-        plt.show()
+        plt.show(block=False)
         '''
         plt.pause(10)
         plt.close()
@@ -690,10 +716,10 @@ class Solver(object):
         # Salva o gráfico como pdf no diretório do projeto
         posFormat = nome_do_arquivo.find('.')
 
-        #nome = 'Solução para' + nome_do_arquivo[:posFormat] + '.pdf'
+        nome = 'Solução para' + nome_do_arquivo[:posFormat] + '.pdf'
 
-        nome = 'Solução ' + nome_do_arquivo + '.pdf'
-        #plt.savefig(nome, format='pdf')
+        nome = './saidas/Solução ' + nome_do_arquivo + '.pdf'
+        plt.savefig(nome, format='pdf')
         self.plotar(plt)
         return plt
 

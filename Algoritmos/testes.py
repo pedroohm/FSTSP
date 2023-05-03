@@ -23,18 +23,17 @@ for folder in folders: # Percorre os diretórios da pasta raiz
     solver = Solver(reader.getTruckMatrix(), reader.getDroneMatrix(), reader.getNodes(), 1, 1, 20)
 
     startTime = time.time()
-    print('Sem HVMP')
-    print(solver.getNodes())
-    print(solver.getSolution())
-    solver.HVMP(1)
-    print('Com HVMP')
-    print(solver.getNodes())
-    print(solver.getSolution())
-    solver.plotarSolucao(sheetName +' inicial ')
+
+    solver.HVMP(3)
+
+    solver.plotarSolucao(sheetName +' inicial')
+    print("Solucao inicial: ", solver.getSolution())
+
     result = solver.RVND()
     endTime = time.time()
 
-    #solver.plotarSolucao(sheetName +' final ', 2)
+    #solver.plotarSolucao(sheetName +' final+drone', 2)
+    print("Solucao Final: ", solver.getSolution())
     solver.plotarSolucao(sheetName+' final')
 
     sheet1.append((folder, result, endTime - startTime))
