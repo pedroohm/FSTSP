@@ -130,7 +130,7 @@ class Solver(object):
         #closest = heapq.nsmallest(num_points, pq)
         #print("closest: ",closest)
         
-        ordenado = sorted(pq, key=lambda pq: int(pq[0]))
+        ordenado = sorted(pq, key=lambda pq: float(pq[0]))
         closest = []
         
         '''

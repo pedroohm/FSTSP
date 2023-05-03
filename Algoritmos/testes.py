@@ -24,17 +24,17 @@ for folder in folders: # Percorre os diretórios da pasta raiz
 
     startTime = time.time()
 
-    solver.HVMP(3)
+    solver.HVMP(2)
 
-    solver.plotarSolucao(sheetName +' inicial')
-    print("Solucao inicial: ", solver.getSolution())
+    solver.plotarSolucao(folder +' inicial')
+    print("Solucao inicial para:", folder, solver.getSolution())
 
     result = solver.RVND()
     endTime = time.time()
 
     #solver.plotarSolucao(sheetName +' final+drone', 2)
-    print("Solucao Final: ", solver.getSolution())
-    solver.plotarSolucao(sheetName+' final')
+    print("Solucao Final para : ", folder, solver.getSolution())
+    solver.plotarSolucao(folder+' final')
 
     sheet1.append((folder, result, endTime - startTime))
-    sheet.save(sheetName + '.xlsx')
+    sheet.save("./saidas/"+sheetName + '.xlsx')
