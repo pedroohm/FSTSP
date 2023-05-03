@@ -131,6 +131,7 @@ class Solver(object):
         #print("closest: ",closest)
         
         ordenado = sorted(pq, key=lambda pq: float(pq[0]))
+        #print("vetor ordenado com base nas distancias", ordenado)
         closest = []
         
         '''
@@ -145,7 +146,7 @@ class Solver(object):
         '''
 
         closest.extend(ordenado[:num_points])
-        print(ordenado, closest)
+        #print(ordenado, closest)
         return closest
 
 
@@ -240,7 +241,11 @@ class Solver(object):
                 for j in range(len(self.__solution) - 2, -1, -1):
                     if j > i:
                         sol = self.__solution.copy()
+                        print("\nentrou 2opt")
+                        print(self.__solution)
                         self.__solution[i:j+1] = reversed(self.__solution[i:j+1])
+                        print("\nsaindo de 2opt")
+                        print(self.__solution)
                         self.calcDist()
                         if(self.__time < lessTime):
                             better = True
@@ -270,6 +275,7 @@ class Solver(object):
                 localSearchs = randomizeLocalSearchs()
             else:
                 k+=1
+        self.localSearch2OPT()
         return self.__time
 
     # DLS = Drone Local Search
