@@ -18,6 +18,7 @@ class Solver(object):
         self.__droneSolution = []
         self.__truckSolution = []
         self.__representation = []
+        self.__repDynamicProg = []
 
     # Funções auxiliares
     def printSolution(self):
@@ -173,9 +174,6 @@ class Solver(object):
             count += 1
         lastInsert = self.__solution[-1]
         self.__solution.append(int(self.__nodes[-1][0])) # Adiciona o depósito, para fechar o ciclo
-        
-        #print(self.__solution) # plotar a solução apos esse passo
-        #print(self.__nodes)
 
         self.__time += float(self.__truckMatrix[lastInsert][0])
         self.__time = round(self.__time,2)
@@ -241,11 +239,7 @@ class Solver(object):
                 for j in range(len(self.__solution) - 2, -1, -1):
                     if j > i:
                         sol = self.__solution.copy()
-                        print("\nentrou 2opt")
-                        print(self.__solution)
                         self.__solution[i:j+1] = reversed(self.__solution[i:j+1])
-                        print("\nsaindo de 2opt")
-                        print(self.__solution)
                         self.calcDist()
                         if(self.__time < lessTime):
                             better = True
@@ -258,12 +252,18 @@ class Solver(object):
             self.__solution = lessSol
         return self.__time
 
+    # Se a escolha aleatória melhore a rota aplica outro método de busca local
     def RVND(self):
         localSearchs = randomizeLocalSearchs()
         k = 1
         while k <= 3:
             oldTime = self.__time
-            chosenLS = localSearchs.pop()
+            print(localSearchs)
+            if not localSearchs:
+                localSearchs = randomizeLocalSearchs()
+            chosenLS = localSearchs.pop(0)
+            print(chosenLS)
+            
             if chosenLS == 1:
                 self.localSearchSwap()
             elif chosenLS == 2:
@@ -272,10 +272,11 @@ class Solver(object):
                 self.localSearch2OPT()
             if(self.__time < oldTime):
                 k = 1
-                localSearchs = randomizeLocalSearchs()
+                localSearchs.append(chosenLS)
             else:
                 k+=1
-        self.localSearch2OPT()
+                #localSearchs = randomizeLocalSearchs()
+
         return self.__time
 
     # DLS = Drone Local Search
@@ -766,7 +767,7 @@ def randomizeLocalSearchs():
     while len(availableValues) != 0:
         newInsert = randint(0, len(availableValues) - 1)
         localSearchs.append(availableValues.pop(newInsert))
-
+    #print(localSearchs)
     return localSearchs
 
 
