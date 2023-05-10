@@ -53,7 +53,10 @@ class Solver(object):
         return self.__nodes[point][1]
 
     def getCoordY(self, point):
-            return self.__nodes[point][2]
+        return self.__nodes[point][2]
+
+    def getAvaliablePoint(self, point):
+        return self.__nodes[point][3]
 
     def getTotalTime(self):
         return self.__time
@@ -64,6 +67,17 @@ class Solver(object):
     def getDroneTime(self, i, j, k):
         return float(self.__droneMatrix[self.__solution[i]][self.__solution[j]]) + float(self.__droneMatrix[self.__solution[j]][self.__solution[k]]) 
 
+    def createDynamicRepresentation(self):
+        self.__repDynamicProg = self.__solution
+        print(self.__solution)
+        for i in range(1,len(self.__repDynamicProg)-1):
+            if self.getAvaliablePoint(self.__repDynamicProg[i]) == 0:
+                r = randint(0,1)
+                if r <= 0.5:
+                    self.__repDynamicProg[i] = -self.__repDynamicProg[i]
+        print(self.__repDynamicProg)
+
+        return self.__repDynamicProg
 
     def calcDist(self):
         self.__time = 0;
@@ -145,11 +159,9 @@ class Solver(object):
             print(closest)
             print(len(self.__solution), len(self.__nodes))
         '''
-
         closest.extend(ordenado[:num_points])
         #print(ordenado, closest)
         return closest
-
 
     def adjustTimeSwap(self, i, j):
         self.__time = self.__time - self.getTime(i-1,i) - self.getTime(i, i+1) - self.getTime(j,j+1)
@@ -258,11 +270,11 @@ class Solver(object):
         k = 1
         while k <= 3:
             oldTime = self.__time
-            print(localSearchs)
+            #print(localSearchs)
             if not localSearchs:
                 localSearchs = randomizeLocalSearchs()
             chosenLS = localSearchs.pop(0)
-            print(chosenLS)
+            #print(chosenLS)
             
             if chosenLS == 1:
                 self.localSearchSwap()
@@ -558,7 +570,6 @@ class Solver(object):
 
         # print(arcs)
 
-
         for i in range(len(self.__solution) - 2):
             for k in range(len(self.__solution) - 1):
                 if(k >= i + 2):
@@ -658,13 +669,6 @@ class Solver(object):
         print(f'Truck Nodes: {len(truckSolution)} | Drone Nodes: {len(droneSolution), droneSolution} | TSP Solution: {len(self.__solution)}')
 
 ## ======= Plotagem da solucao em grafo ======
-    def plotar(self, plt):
-        plt.show(block=False)
-        '''
-        plt.pause(10)
-        plt.close()
-        '''
-
     # A chamada para a plotagem pode ser feita passando-se
     # a solução incial(solution) ou a final (truckSolution)
     def plotSol(self, sol, ax, color):
@@ -683,7 +687,6 @@ class Solver(object):
 
         # Plota os pontos pertencentes a solução no gráfico
         ax.plot(x, y, marker='o', color=color)
-
 
     def plotAllPoints(self, nodes, ax):
         # Prepara os demais pontos para inserir no gráfico
@@ -727,8 +730,15 @@ class Solver(object):
 
         nome = './saidas/Solução ' + nome_do_arquivo + '.pdf'
         plt.savefig(nome, format='pdf')
-        self.plotar(plt)
+        
+        #self.plotar(plt)
+
         return plt
+    
+    def plotar(self, plt):
+        plt.show(block=False) #não bloqueia a execução do código
+        plt.pause(10) # mostra a figura por 10 seg
+        plt.close() #fecha a figura
 
     # traça a rota do drone na saida de vermelho
     def plotDroneRoute(self, solution, representation, ax, color):
@@ -751,7 +761,6 @@ class Solver(object):
                     plt.text(self.getCoordX(j), self.getCoordY(j), str(j), fontsize='medium')
         ax.plot(x, y, marker='o', color=color)
         
-
         # O que esta sendo impresso no grafico
         print()
         print('Solution: ', self.getSolution())

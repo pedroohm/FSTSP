@@ -14,7 +14,6 @@ sheet1 = sheet.active
 
 sheet1.append(firstLine)
 
-# print(os.curdir)
 folders = os.listdir(TSPDReader1.directory)
 for folder in folders: # Percorre os diretórios da pasta raiz
     reader = TSPDReader1()
@@ -38,7 +37,6 @@ for folder in folders: # Percorre os diretórios da pasta raiz
     result = solver.RVND()
     endTime = time.time()
 
-    #solver.plotarSolucao(sheetName +' final+drone', 2)
     arquivo.write("Solucao final para: "+ folder + '\n')
     solucao = solver.getSolution()
     for i in range(len(solucao)):
@@ -47,6 +45,8 @@ for folder in folders: # Percorre os diretórios da pasta raiz
 
     solver.plotarSolucao(folder + ' in ' + sheetName + ' final')
     print("termino da solucao", folder)
+
+    solver.createDynamicRepresentation()
 
     sheet1.append((folder, result, endTime - startTime))
     sheet.save('./saidas/' + sheetName + '.xlsx')
