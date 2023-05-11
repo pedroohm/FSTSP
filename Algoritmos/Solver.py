@@ -73,7 +73,7 @@ class Solver(object):
         for i in range(1,len(self.__repDynamicProg)-1):
             if self.getAvaliablePoint(self.__repDynamicProg[i]) == 0:
                 r = randint(0,1)
-                if r <= 0.5:
+                if r <= 0.5 and (self.__repDynamicProg[i-1] >= 0):
                     self.__repDynamicProg[i] = -self.__repDynamicProg[i]
         print(self.__repDynamicProg)
 
