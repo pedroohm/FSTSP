@@ -18,7 +18,12 @@ class Solver(object):
         self.__droneSolution = []
         self.__truckSolution = []
         self.__representation = []
+        
         self.__repDynamicProg = []
+        self.__newTruckSolution = []
+        self.__pointAdressing = []
+        self.__isLaunch = []
+        self.__isCollect = []
 
     # Funções auxiliares
     def printSolution(self):
@@ -79,6 +84,57 @@ class Solver(object):
 
         return self.__repDynamicProg
 
+    def createTruckSolution(self):
+        for i in range(len(self.__repDynamicProg)):
+            if i >= 0:
+                self.__newTruckSolution.append(i)
+    
+    def C(self, pontoK):
+        pass
+    
+    # Calcula tempo para mover o caminhao a partir do nó i
+    def Cmt(self, i):
+
+        indice = self.__repDynamicProg.index(i)
+
+        Ti = [] # O conjunto de indices dos nós atendidos pelo caminhão entre i e d(i).
+        for k in self.__repDynamicProg:
+            if k.index() > indice and k >= 0:
+                Ti.append(k.index())
+            elif k.index() > indice and k < 0:
+                break
+        
+        if Ti.empty():
+            return np.inf
+        else:
+            time = newTime = np.inf
+            
+            for j in range(len(Ti)):
+                i = indice
+                newtime = self.__repDynamicProg[i]
+                i += 1
+                while(i != Ti[j]):
+                    newtime += self.__solution[i]
+                    i += 1
+                
+                newtime = self.__repDynamicProg[i] + self.__repDynamicProg[Ti[j]] + C(self.__repDynamicProg[Ti[j]])
+                if newTime < time:
+                    time = newTime
+        
+    def dynamicAlgorithm(self, m):
+        '''
+        dynamicAlgorithm(self, m)
+        self.HVMP(m)
+        self.RVND()
+        self.createDynamicRepresentation()
+        '''
+
+        self.createTruckSolution()
+
+        for i in range(len(self.__repDynamicProg)):
+            for k in range(len(self.__repDynamicProg)):
+                pass
+
     def calcDist(self):
         self.__time = 0;
         '''
@@ -132,7 +188,6 @@ class Solver(object):
                 time += max(droneTime, truckTime)
                 truckTime = 0
         return time
-
 
     def closestPoints(self, num_points):
         pq = []
@@ -509,7 +564,7 @@ class Solver(object):
                 k += 1 
         return self.__time
 
-    # adicionado: plotar solução a cada movimento do grasp
+    #plotar solução a cada movimento do grasp
     def droneGrasp(self, repeat, m):
         cont = 0
         bestTime = -1
@@ -778,5 +833,3 @@ def randomizeLocalSearchs():
         localSearchs.append(availableValues.pop(newInsert))
     #print(localSearchs)
     return localSearchs
-
-
