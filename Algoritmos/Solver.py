@@ -19,11 +19,17 @@ class Solver(object):
         self.__truckSolution = []
         self.__representation = []
         
+
+        self.__vectorC = []
+        self.__vectorSigma = []
+        self.__vectorEmais = []
         self.__repDynamicProg = []
         self.__newTruckSolution = []
         self.__pointAdressing = []
         self.__isLaunch = []
         self.__isCollect = []
+        self.__clientServed = []
+
 
     # Funções auxiliares
     def printSolution(self):
@@ -74,13 +80,27 @@ class Solver(object):
 
     def createDynamicRepresentation(self):
         self.__repDynamicProg = self.__solution
-        print(self.__solution)
+        #print(self.__solution)
         for i in range(1,len(self.__repDynamicProg)-1):
             if self.getAvaliablePoint(self.__repDynamicProg[i]) == 0:
                 r = randint(0,1)
                 if r <= 0.5 and (self.__repDynamicProg[i-1] >= 0):
                     self.__repDynamicProg[i] = -self.__repDynamicProg[i]
+        
+        
+        # representação auxiliar para mostrar quais os pontos foram atendidos pelo drone (1)
+        for i in range(len(self.__repDynamicProg)):
+            if self.__repDynamicProg[i] < 0:
+                self.__clientServed.append(1)
+            else:
+                self.__clientServed.append(0)
+
+        '''
+        print("DinamycRep", len(self.__repDynamicProg))
         print(self.__repDynamicProg)
+        print("solutionRep", len(self.__clientServed))
+        print(self.__clientServed)
+        '''
 
         return self.__repDynamicProg
 
@@ -89,12 +109,61 @@ class Solver(object):
             if i >= 0:
                 self.__newTruckSolution.append(i)
     
-    def C(self, pontoK):
-        pass
-    
+
+    def Ti_mais(self, i):
+        # Procura o próximo número negativo a partir do ponto dado
+        pontoDi = -1
+        for j in range(ponto + 1, len(self.__repDynamicProg)):
+            if self.__repDynamicProg[i] < 0:
+                pontoDi = j
+                break
+        
+        # Se não houver próximo número negativo, retorna uma lista vazia
+        if pontoDi == -1:
+            return []
+        
+        # Encontra os números positivos a seguir até o próximo negativo
+        positivos_apos_negativo = []
+        for i in range(pontoDi + 1, len(self.__repDynamicProg)):
+            if self.__repDynamicProg[i] >= 0:
+                positivos_apos_negativo.append(self.__repDynamicProg[i])
+            else:
+                break
+        
+        return positivos_apos_negativo
+
+    def E_mais(self, vectorTi):
+        minimumTime = np.inf
+        self.__vectorEmais = []
+        for k in vectorTi:
+            if self.getTime(i,k) + 1 + self.__vectorSigma[k.index()]*1 <= self.endurance and self.getDroneTime(i,j,k) + self.__vectorSigma[k.index()]*1 <= self.endurance:
+                self.__vectorEmais.append(k)
+        
+        return self.__vectorEmais
+
+    def Cll(self, i):
+        # Calcular T(i)+ e E+
+        vectorTi = []
+        vectorTi = self.Ti_mais(i)
+
+        self.E_mais(vectorTi)
+
+        if self.__vectorEmais.empty():
+            return np.inf
+        
+        minimumTime = np.inf
+        for k in self.__vectorEmais:
+            a = self.getTime(i,k) + 1 + self.__vectorSigma[k.index()]*1
+            b = self.getDroneTime(i,j,k) + self.__vectorSigma[k.index()]*1 
+            
+            newTime = max(a,b)+ self.__vectorC[k.index()]
+            if newTime < minimumTime:
+                minimumTime = newTime
+        
+        return minimumTime
+
     # Calcula tempo para mover o caminhao a partir do nó i
     def Cmt(self, i):
-
         indice = self.__repDynamicProg.index(i)
 
         Ti = [] # O conjunto de indices dos nós atendidos pelo caminhão entre i e d(i).
@@ -106,37 +175,46 @@ class Solver(object):
         
         if Ti.empty():
             return np.inf
+
         else:
             time = newTime = np.inf
             
             for j in range(len(Ti)):
                 i = indice
+                
                 newtime = self.__repDynamicProg[i]
+                
                 i += 1
                 while(i != Ti[j]):
                     newtime += self.__solution[i]
                     i += 1
                 
-                newtime = self.__repDynamicProg[i] + self.__repDynamicProg[Ti[j]] + C(self.__repDynamicProg[Ti[j]])
+                #newtime = self.__repDynamicProg[i] + self.__repDynamicProg[Ti[j]] + C(self.__repDynamicProg[Ti[j]])
+                
                 if newTime < time:
                     time = newTime
+            
+            return time
         
-    def dynamicAlgorithm(self, m):
-        '''
-        dynamicAlgorithm(self, m)
-        self.HVMP(m)
-        self.RVND()
-        self.createDynamicRepresentation()
-        '''
+    def fillCvector(self, m):
 
-        self.createTruckSolution()
+        # define o tamanho do vetor C como o mesmo da representacao
+        self.__vectorC = self.__vectorC[:len(self.__repDynamicProg)]
 
-        for i in range(len(self.__repDynamicProg)):
-            for k in range(len(self.__repDynamicProg)):
-                pass
+        # C(i) do depósito é zero
+        self.__vectorC[len(self.__repDynamicProg)] = 0
+
+        for i in range(len(self.__vectorC)-2, -1, -1):
+            if(self.Cmt(i) < self.Cll(i)):
+                self.__vectorSigma[i] = 1
+                self.__vectorC[i] = self.Cmt(i)
+            else:
+                self.__vectorSigma[i] = 1
+                self.__vectorC[i] = self.Cll(i)
+
 
     def calcDist(self):
-        self.__time = 0;
+        self.__time = 0
         '''
         print('Tamanhos: solution, nodes, truck ')
         print(len(self.__solution))
