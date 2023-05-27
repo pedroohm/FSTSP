@@ -195,22 +195,38 @@ class Solver(object):
                     time = newTime
             
             return time
-        
+
     def fillCvector(self, m):
+        Ti_mais = []
 
-        # define o tamanho do vetor C como o mesmo da representacao
-        self.__vectorC = self.__vectorC[:len(self.__repDynamicProg)]
+        n = len(self.__repDynamicProg)
 
-        # C(i) do depósito é zero
-        self.__vectorC[len(self.__repDynamicProg)] = 0
+        self.__vectorC = [0] * (n+1)
+        i = n+1
 
-        for i in range(len(self.__vectorC)-2, -1, -1):
-            if(self.Cmt(i) < self.Cll(i)):
-                self.__vectorSigma[i] = 1
-                self.__vectorC[i] = self.Cmt(i)
+        while self.__repDynamicProg[i] >= 0:
+            Ti_mais.append(i)
+            i -= 1
+        
+        t = i-1
+        Ti = []
+        for i in range(t, 0, -1):
+            if self.__repDynamicProg[i] > 0:
+                self.__vectorC = min(self.Cmt(i, Ti), self.Cll(i, Ti_mais))
+                Ti.append(i)
             else:
-                self.__vectorSigma[i] = 1
-                self.__vectorC[i] = self.Cll(i)
+                Ti_mais = Ti
+                Ti = []
+                if Cmt(i, Ti) > Cll(i, Ti_mais):
+                    self.__vectorSigma[i] = 1
+                else:
+                    self.__vectorSigma[k] = 1
+
+
+    return "its ready bro"
+                    
+
+            
 
 
     def calcDist(self):
