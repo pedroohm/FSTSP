@@ -87,6 +87,8 @@ class Solver(object):
                 if r <= 0.5 and (self.__repDynamicProg[i-1] >= 0):
                     self.__repDynamicProg[i] = -self.__repDynamicProg[i]
         
+        return self.__repDynamicProg
+        
         
         # representação auxiliar para mostrar quais os pontos foram atendidos pelo drone (1)
         for i in range(len(self.__repDynamicProg)):
@@ -132,38 +134,37 @@ class Solver(object):
         
         return positivos_apos_negativo
 
-    def E_mais(self, vectorTi):
+    def E_mais(self, i, vectorTi):
         minimumTime = np.inf
         self.__vectorEmais = []
         for k in vectorTi:
-            if self.getTime(i,k) + 1 + self.__vectorSigma[k.index()]*1 <= self.endurance and self.getDroneTime(i,j,k) + self.__vectorSigma[k.index()]*1 <= self.endurance:
+            if self.getTime(i,k) + 1 + self.__vectorSigma[k]*1 <= self.endurance and self.getDroneTime(i,j,k) + self.__vectorSigma[k]*1 <= self.endurance:
                 self.__vectorEmais.append(k)
         
         return self.__vectorEmais
 
-    def Cll(self, i):
+    def Cll(self, i, Ti_mais):
         # Calcular T(i)+ e E+
-        vectorTi = []
-        vectorTi = self.Ti_mais(i)
 
-        self.E_mais(vectorTi)
+        self.E_mais(i, Ti_mais)
 
         if self.__vectorEmais.empty():
             return np.inf
         
         minimumTime = np.inf
         for k in self.__vectorEmais:
-            a = self.getTime(i,k) + 1 + self.__vectorSigma[k.index()]*1
-            b = self.getDroneTime(i,j,k) + self.__vectorSigma[k.index()]*1 
+            a = self.getTime(i,k) + 1 + self.__vectorSigma[k]*1
+            b = self.getDroneTime(i,j,k) + self.__vectorSigma[k]*1 
             
-            newTime = max(a,b)+ self.__vectorC[k.index()]
+            newTime = max(a,b)+ self.__vectorC[k]
             if newTime < minimumTime:
                 minimumTime = newTime
         
         return minimumTime
 
+    '''
     # Calcula tempo para mover o caminhao a partir do nó i
-    def Cmt(self, i):
+    def Cmt(self, i, Ti):
         indice = self.__repDynamicProg.index(i)
 
         Ti = [] # O conjunto de indices dos nós atendidos pelo caminhão entre i e d(i).
@@ -195,15 +196,36 @@ class Solver(object):
                     time = newTime
             
             return time
+    '''
 
-    def fillCvector(self, m):
+       # Calcula tempo para mover o caminhao a partir do nó i
+    def Cmt(self, i, Ti):
+        print("vetor da representacao", self.__repDynamicProg)
+
+        #retorna em qual posicao o elemento i esta no array
+        #indice = self.__repDynamicProg.index(i)         
+
+        # O conjunto de indices dos nós atendidos pelo caminhão entre i e d(i).
+        if len(Ti) == 0:
+            return np.inf
+        
+        minimo = np.inf
+        for k in Ti:
+            newMinimo = min(getTime(i,k) + self.__vectorC[k])
+            if newMinimo < minimo:
+                minimo = (newMinimo, k)
+        
+        return minimo
+
+
+    def fillCvector(self):
         Ti_mais = []
 
         n = len(self.__repDynamicProg)
 
-        self.__vectorC = [0] * (n+1)
-        i = n+1
+        self.__vectorC = [0] * (n)
 
+        i = n-1
         while self.__repDynamicProg[i] >= 0:
             Ti_mais.append(i)
             i -= 1
@@ -212,7 +234,7 @@ class Solver(object):
         Ti = []
         for i in range(t, 0, -1):
             if self.__repDynamicProg[i] > 0:
-                self.__vectorC = min(self.Cmt(i, Ti), self.Cll(i, Ti_mais))
+                self.__vectorC[i] = min(self.Cmt(i, Ti), self.Cll(i, Ti_mais))
                 Ti.append(i)
             else:
                 Ti_mais = Ti
@@ -221,12 +243,7 @@ class Solver(object):
                     self.__vectorSigma[i] = 1
                 else:
                     self.__vectorSigma[k] = 1
-
-
-    return "its ready bro"
-                    
-
-            
+        return self.__vectorC            
 
 
     def calcDist(self):
