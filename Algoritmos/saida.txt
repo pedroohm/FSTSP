@@ -1,0 +1,112 @@
+Digite o nome do arquivo com os resultados: inicio da solucao prv14
+termino da solucao prv14
+indice analisado:  9
+Cmt = inf, pontoK = None
+Cll = 1.0
+
+
+##Testando funcionamento##
+indice analisado:  9
+conjunto Ti+: [14, 5, 9, 6]
+conjunto Ti: [4]
+conjunto Ci: [0, 0, 0, 0, 0, 0, 0, 0, 0, 1.0, 0, 0, 0, 0, 0]
+vetor repDynamicProg:  [0, 10, 13, 1, 7, 12, 11, -8, 2, 4, -3, 6, 9, 5, 14]
+indice analisado:  8
+Cmt = 53.0, pontoK = 4
+Cll = 29.0
+
+
+##Testando funcionamento##
+indice analisado:  8
+conjunto Ti+: [14, 5, 9, 6]
+conjunto Ti: [4, 2]
+conjunto Ci: [0, 0, 0, 0, 0, 0, 0, 0, 29.0, 1.0, 0, 0, 0, 0, 0]
+vetor repDynamicProg:  [0, 10, 13, 1, 7, 12, 11, -8, 2, 4, -3, 6, 9, 5, 14]
+indice analisado:  7
+Cmt = 0.0, pontoK = 4
+Cll = 9.0
+
+
+##Testando funcionamento##
+indice analisado:  7
+conjunto Ti+: [4, 2]
+conjunto Ti: []
+conjunto Ci: [0, 0, 0, 0, 1, 0, 0, 0, 29.0, 1.0, 0, 0, 0, 0, 0]
+vetor repDynamicProg:  [0, 10, 13, 1, 7, 12, 11, -8, 2, 4, -3, 6, 9, 5, 14]
+indice analisado:  6
+Cmt = inf, pontoK = None
+Cll = 42.0
+
+
+##Testando funcionamento##
+indice analisado:  6
+conjunto Ti+: [4, 2]
+conjunto Ti: [11]
+conjunto Ci: [0, 0, 0, 0, 1, 0, 42.0, 0, 29.0, 1.0, 0, 0, 0, 0, 0]
+vetor repDynamicProg:  [0, 10, 13, 1, 7, 12, 11, -8, 2, 4, -3, 6, 9, 5, 14]
+indice analisado:  5
+Cmt = 67.0, pontoK = 11
+Cll = 34.0
+
+
+##Testando funcionamento##
+indice analisado:  5
+conjunto Ti+: [4, 2]
+conjunto Ti: [11, 12]
+conjunto Ci: [0, 0, 0, 0, 1, 34.0, 42.0, 0, 29.0, 1.0, 0, 0, 0, 0, 0]
+vetor repDynamicProg:  [0, 10, 13, 1, 7, 12, 11, -8, 2, 4, -3, 6, 9, 5, 14]
+indice analisado:  4
+Cmt = 51.0, pontoK = 12
+Cll = 3.0
+
+
+##Testando funcionamento##
+indice analisado:  4
+conjunto Ti+: [4, 2]
+conjunto Ti: [11, 12, 7]
+conjunto Ci: [0, 0, 0, 0, 3.0, 34.0, 42.0, 0, 29.0, 1.0, 0, 0, 0, 0, 0]
+vetor repDynamicProg:  [0, 10, 13, 1, 7, 12, 11, -8, 2, 4, -3, 6, 9, 5, 14]
+indice analisado:  3
+Cmt = 32.0, pontoK = 7
+Cll = 9.0
+
+
+##Testando funcionamento##
+indice analisado:  3
+conjunto Ti+: [4, 2]
+conjunto Ti: [11, 12, 7, 1]
+conjunto Ci: [0, 0, 0, 9.0, 3.0, 34.0, 42.0, 0, 29.0, 1.0, 0, 0, 0, 0, 0]
+vetor repDynamicProg:  [0, 10, 13, 1, 7, 12, 11, -8, 2, 4, -3, 6, 9, 5, 14]
+indice analisado:  2
+Cmt = 30.0, pontoK = 1
+Cll = 1.0
+
+
+##Testando funcionamento##
+indice analisado:  2
+conjunto Ti+: [4, 2]
+conjunto Ti: [11, 12, 7, 1, 13]
+conjunto Ci: [0, 0, 1.0, 9.0, 3.0, 34.0, 42.0, 0, 29.0, 1.0, 0, 0, 0, 0, 0]
+vetor repDynamicProg:  [0, 10, 13, 1, 7, 12, 11, -8, 2, 4, -3, 6, 9, 5, 14]
+indice analisado:  1
+Cmt = 0.0, pontoK = 1
+Cll = 27.0
+
+
+##Testando funcionamento##
+indice analisado:  1
+conjunto Ti+: [4, 2]
+conjunto Ti: [11, 12, 7, 1, 13, 10]
+conjunto Ci: [0, 0.0, 1.0, 9.0, 3.0, 34.0, 42.0, 0, 29.0, 1.0, 0, 0, 0, 0, 0]
+vetor repDynamicProg:  [0, 10, 13, 1, 7, 12, 11, -8, 2, 4, -3, 6, 9, 5, 14]
+indice analisado:  0
+Cmt = 9.0, pontoK = 1
+Cll = 31.0
+
+
+##Testando funcionamento##
+indice analisado:  0
+conjunto Ti+: [11, 12, 7, 1, 13, 10]
+conjunto Ti: []
+conjunto Ci: [0, 1, 1.0, 9.0, 3.0, 34.0, 42.0, 0, 29.0, 1.0, 0, 0, 0, 0, 0]
+vetor repDynamicProg:  [0, 10, 13, 1, 7, 12, 11, -8, 2, 4, -3, 6, 9, 5, 14]

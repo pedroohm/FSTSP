@@ -111,7 +111,7 @@ class Solver(object):
             if i >= 0:
                 self.__newTruckSolution.append(i)
     
-
+    '''
     def Ti_mais(self, i):
         # Procura o próximo número negativo a partir do ponto dado
         pontoDi = -1
@@ -133,89 +133,65 @@ class Solver(object):
                 break
         
         return positivos_apos_negativo
+    '''
 
     def E_mais(self, i, vectorTi):
         minimumTime = np.inf
-        self.__vectorEmais = []
+        #self.__vectorEmais = []
+
+        self.__vectorEmais = vectorTi
+        return self.__vectorEmais
+        '''
         for k in vectorTi:
             if self.getTime(i,k) + 1 + self.__vectorSigma[k]*1 <= self.endurance and self.getDroneTime(i,j,k) + self.__vectorSigma[k]*1 <= self.endurance:
                 self.__vectorEmais.append(k)
         
         return self.__vectorEmais
+        '''
 
-    def Cll(self, i, Ti_mais):
-        # Calcular T(i)+ e E+
-
+    def Cll(self, i, di, Ti_mais):
+        #Calcular T(i)+ e E+
         self.E_mais(i, Ti_mais)
 
-        if self.__vectorEmais.empty():
+        if len(self.__vectorEmais) == 0:
             return np.inf
         
         minimumTime = np.inf
         for k in self.__vectorEmais:
-            a = self.getTime(i,k) + 1 + self.__vectorSigma[k]*1
-            b = self.getDroneTime(i,j,k) + self.__vectorSigma[k]*1 
             
-            newTime = max(a,b)+ self.__vectorC[k]
+            a = self.getTime(i,k) + 1 + self.__vectorSigma[k]*1
+            #b = self.getDroneTime(i,di,k) + self.__vectorSigma[k]*1 
+            
+            #newTime = max(a,b)+ self.__vectorC[k]
+            newTime = a + self.__vectorC[k]
+            #print(f"verificando - k, newTime, a, vectorC[k]: {k}, {newTime}, {a}, {self.__vectorC[k]}")
             if newTime < minimumTime:
                 minimumTime = newTime
+            #print("tempo minimo do Cll ", minimumTime)
         
         return minimumTime
 
-    '''
-    # Calcula tempo para mover o caminhao a partir do nó i
+    #Calcula tempo para mover o caminhao a partir do nó i
     def Cmt(self, i, Ti):
-        indice = self.__repDynamicProg.index(i)
-
-        Ti = [] # O conjunto de indices dos nós atendidos pelo caminhão entre i e d(i).
-        for k in self.__repDynamicProg:
-            if k.index() > indice and k >= 0:
-                Ti.append(k.index())
-            elif k.index() > indice and k < 0:
-                break
-        
-        if Ti.empty():
-            return np.inf
-
-        else:
-            time = newTime = np.inf
-            
-            for j in range(len(Ti)):
-                i = indice
-                
-                newtime = self.__repDynamicProg[i]
-                
-                i += 1
-                while(i != Ti[j]):
-                    newtime += self.__solution[i]
-                    i += 1
-                
-                #newtime = self.__repDynamicProg[i] + self.__repDynamicProg[Ti[j]] + C(self.__repDynamicProg[Ti[j]])
-                
-                if newTime < time:
-                    time = newTime
-            
-            return time
-    '''
-
-       # Calcula tempo para mover o caminhao a partir do nó i
-    def Cmt(self, i, Ti):
-        print("vetor da representacao", self.__repDynamicProg)
-
         #retorna em qual posicao o elemento i esta no array
         #indice = self.__repDynamicProg.index(i)         
 
         # O conjunto de indices dos nós atendidos pelo caminhão entre i e d(i).
         if len(Ti) == 0:
-            return np.inf
+            return np.inf, None
         
-        minimo = np.inf
+        minimumTime = np.inf
+        pointK = 0
+
+        #print("\nCalculo do Cmt")
         for k in Ti:
-            newMinimo = min(getTime(i,k) + self.__vectorC[k])
-            if newMinimo < minimo:
-                minimo = (newMinimo, k)
+            newMinimo = self.getTime(i,k) + self.__vectorC[k]
+            if newMinimo < minimumTime:
+                minimumTime = newMinimo
+                pointK = k            
+            #print("tempo minimo e ponto k: ", minimo, pointK)
         
-        return minimo
+        return minimumTime, pointK
 
 
     def fillCvector(self):
@@ -224,25 +200,55 @@ class Solver(object):
         n = len(self.__repDynamicProg)
 
         self.__vectorC = [0] * (n)
+        self.__vectorSigma = self.__vectorC
+
+        '''
+        
+        print("tamanho do vetor C: ", len(self.__vectorC))
+        print("tamanho do n: ", n)
+        '''
 
         i = n-1
         while self.__repDynamicProg[i] >= 0:
-            Ti_mais.append(i)
+            Ti_mais.append(self.__repDynamicProg[i])  #Ti_mais.append(i)
             i -= 1
         
         t = i-1
         Ti = []
-        for i in range(t, 0, -1):
-            if self.__repDynamicProg[i] > 0:
-                self.__vectorC[i] = min(self.Cmt(i, Ti), self.Cll(i, Ti_mais))
-                Ti.append(i)
+        di = i
+        for i in range(t, -1, -1):            
+            Cmt, k = self.Cmt(i, Ti)
+            Cll = self.Cll(i,di, Ti_mais)
+
+            print("indice analisado: ", i)
+            print(f"Cmt = {Cmt}, pontoK = {k}")
+            print(f"Cll = {Cll}")
+
+            if self.__repDynamicProg[i] > 0:  
+                Ti.append(self.__repDynamicProg[i]) #Ti.append(i)  
+                if Cmt < Cll:
+                    self.__vectorC[i] = Cmt
+                else:
+                    self.__vectorC[i] = Cll
             else:
+                Ti_mais = []
                 Ti_mais = Ti
                 Ti = []
-                if Cmt(i, Ti) > Cll(i, Ti_mais):
+                di = i
+                if Cmt > Cll:
                     self.__vectorSigma[i] = 1
                 else:
                     self.__vectorSigma[k] = 1
+
+            # Testando funcionamento
+            print("\n\n##Testando funcionamento##")
+            print("indice analisado: ", i)
+            print("conjunto Ti+:", Ti_mais)
+            print("conjunto Ti:", Ti) 
+            #print("conjunto E+:", E_mais) 
+            print("conjunto Ci:", self.__vectorC)
+            print("vetor repDynamicProg: ", self.__repDynamicProg)
+
         return self.__vectorC            
 
 
