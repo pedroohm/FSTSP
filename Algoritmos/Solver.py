@@ -221,10 +221,11 @@ class Solver(object):
             Cll = self.Cll(i,di, Ti_mais)
 
             print("indice analisado: ", i)
+            print("ponto di:", di)
             print(f"Cmt = {Cmt}, pontoK = {k}")
             print(f"Cll = {Cll}")
 
-            if self.__repDynamicProg[i] > 0:  
+            if self.__repDynamicProg[i] >= 0:  
                 Ti.append(self.__repDynamicProg[i]) #Ti.append(i)  
                 if Cmt < Cll:
                     self.__vectorC[i] = Cmt
