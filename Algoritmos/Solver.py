@@ -111,40 +111,45 @@ class Solver(object):
     
 
     def E_mais(self, i, di, vectorTi):
-        #minimumTime = np.inf
-        self.__vectorEmais = []
+        vectorE_mais = []
 
-        #self.__vectorEmais = vectorTi #caso nao tenha a matriz dos drones, utilizar essa
-        #return self.__vectorEmais  #caso nao tenha a matriz dos drones, utilizar essa
+        #vectorE_mais = vectorTi #caso nao tenha a matriz dos drones, utilizar essa
+        #return vectorE_mais  #caso nao tenha a matriz dos drones, utilizar essa
         
         for k in vectorTi:
             if self.getTime(i,k) + 1 + self.__vectorSigma[k]*1 <= self.__endurance and self.getDroneTime2(i,di,k) + self.__vectorSigma[k]*1 <= self.__endurance:
-                self.__vectorEmais.append(k)
+                vectorE_mais.append(k)
         
-        return self.__vectorEmais
+        return vectorE_mais
         
 
     def Cll(self, i, di, Ti_mais):
         #Calcular T(i)+ e E+
-        self.E_mais(i,di, Ti_mais)
+        vectorE_mais = self.E_mais(i,di, Ti_mais)
 
-        if len(self.__vectorEmais) == 0:
+        if len(vectorE_mais) == 0:
             return np.inf
         
-        minimumTime = np.inf
-        for k in self.__vectorEmais:
+        time = np.inf
+
+        #print("\nMostrando vetor E_mais: ", vectorE_mais)
+        for k in vectorE_mais:
             
             a = self.getTime2(i,k) + 1 + self.__vectorSigma[k]*1
-            b = self.getDroneTime(i,di,k) + self.__vectorSigma[k]*1 
-            
+            b = self.getDroneTime2(i,di,k) + self.__vectorSigma[k]*1 
+
             newTime = max(a,b)
+            
+            #newTime = max(a,b) + self.__vectorC[self.__repDynamicProg.index(k)] # baseado na literatura
             #newTime = a + self.__vectorC[k]
             #print(f"verificando - k, newTime, a, vectorC[k]: {k}, {newTime}, {a}, {self.__vectorC[k]}")
-            if newTime < minimumTime:
-                minimumTime = newTime
-            #print("tempo minimo do Cll ", minimumTime)
+            if newTime < time:
+                time = newTime
+                #print(self.__vectorC[self.__repDynamicProg.index(k)])
+                #print(f"k: {k}, self.__repDynamicProg.index(k): {self.__repDynamicProg.index(k)}; vetorC no indice de k: {self.__vectorC[self.__repDynamicProg.index(k)]}")
+            #print("tempo minimo do Cll ", time)
         
-        return minimumTime
+        return time
 
     #Calcula tempo para mover o caminhao a partir do nó i
     def Cmt(self, i, Ti):
@@ -175,7 +180,7 @@ class Solver(object):
         n = len(self.__repDynamicProg)
 
         self.__vectorC = [0] * (n)
-        self.__vectorSigma = self.__vectorC
+        self.__vectorSigma = [0] * (n)
 
         i = n-1
         while self.__repDynamicProg[i] >= 0:           
@@ -192,6 +197,7 @@ class Solver(object):
 
         Cll = self.Cll(i,di, Ti_mais)
         self.__vectorC[i] = Cll + self.__vectorC[i+1]
+        self.__vectorSigma[i] = 1
         
         t = i-1
         for i in range(t, -1, -1):            
@@ -227,7 +233,7 @@ class Solver(object):
             print("indice analisado: ", i)
             print("conjunto Ti+:", Ti_mais)
             print("conjunto Ti:", Ti) 
-            #print("conjunto E+:", E_mais) 
+            print("conjunto Sigma:", self.__vectorSigma) 
             print("conjunto Ci:", self.__vectorC)
             print("vetor repDynamicProg: ", self.__repDynamicProg)
 
