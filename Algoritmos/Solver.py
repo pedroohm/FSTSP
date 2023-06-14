@@ -128,7 +128,7 @@ class Solver(object):
         vectorE_mais = self.E_mais(i,di, Ti_mais)
 
         if len(vectorE_mais) == 0:
-            return np.inf
+            return np.inf, None
         
         time = np.inf
 
@@ -138,18 +138,19 @@ class Solver(object):
             a = self.getTime2(i,k) + 1 + self.__vectorSigma[k]*1
             b = self.getDroneTime2(i,di,k) + self.__vectorSigma[k]*1 
 
-            newTime = max(a,b)
+            #newTime = max(a,b)
             
-            #newTime = max(a,b) + self.__vectorC[self.__repDynamicProg.index(k)] # baseado na literatura
+            newTime = max(a,b) + self.__vectorC[self.__repDynamicProg.index(k)] # baseado na literatura
             #newTime = a + self.__vectorC[k]
             #print(f"verificando - k, newTime, a, vectorC[k]: {k}, {newTime}, {a}, {self.__vectorC[k]}")
             if newTime < time:
                 time = newTime
+                ponto = k
                 #print(self.__vectorC[self.__repDynamicProg.index(k)])
                 #print(f"k: {k}, self.__repDynamicProg.index(k): {self.__repDynamicProg.index(k)}; vetorC no indice de k: {self.__vectorC[self.__repDynamicProg.index(k)]}")
             #print("tempo minimo do Cll ", time)
         
-        return time
+        return time, ponto
 
     #Calcula tempo para mover o caminhao a partir do nó i
     def Cmt(self, i, Ti):
@@ -195,14 +196,16 @@ class Solver(object):
         Ti = []
         di = i
 
+        '''
         Cll = self.Cll(i,di, Ti_mais)
         self.__vectorC[i] = Cll + self.__vectorC[i+1]
         self.__vectorSigma[i] = 1
-        
+        '''
+
         t = i-1
         for i in range(t, -1, -1):            
             Cmt, k = self.Cmt(i, Ti)
-            Cll = self.Cll(i,di, Ti_mais)
+            Cll, j = self.Cll(i,di, Ti_mais)
 
             print("indice analisado: ", i)
             print("ponto di:", di)
@@ -212,16 +215,18 @@ class Solver(object):
             if self.__repDynamicProg[i] >= 0:  
                 Ti.append(self.__repDynamicProg[i]) #Ti.append(i)  
                 if Cmt < Cll:
-                    self.__vectorC[i] = Cmt + self.__vectorC[i+1]
+                    self.__vectorC[i] = Cmt
                 else:
-                    self.__vectorC[i] = Cll + self.__vectorC[i+1]
+                    self.__vectorC[i] = Cll
             else:
                 Ti_mais = []
                 Ti_mais = Ti
                 Ti = []
                 di = i
 
-                self.__vectorC[i] = Cll + self.__vectorC[i+1]
+                i = i-1
+                Cll, j = self.Cll(i,di, Ti_mais)
+
                 
                 if Cmt > Cll:
                     self.__vectorSigma[i] = 1
