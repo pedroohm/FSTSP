@@ -73,10 +73,15 @@ class Solver(object):
         return self.__time
 
     def getTime(self, _from, _to):
-        return float(self.__truckMatrix[self.__solution[_from]][self.__solution[_to]])
+        return float(self.__truckMatrix[self.__solution[_from]][self.__solution[_to]])    
 
     def getDroneTime(self, i, j, k):
         return float(self.__droneMatrix[self.__solution[i]][self.__solution[j]]) + float(self.__droneMatrix[self.__solution[j]][self.__solution[k]]) 
+
+    def getTime2(self, _from, _to):
+        return float(self.__truckMatrix[self.__repDynamicProg[_from]][self.__repDynamicProg[_to]])
+    def getDroneTime2(self, i, j, k):
+        return float(self.__droneMatrix[self.__repDynamicProg[i]][self.__repDynamicProg[j]]) + float(self.__droneMatrix[self.__repDynamicProg[j]][self.__repDynamicProg[k]]) 
 
     def createDynamicRepresentation(self):
         self.__repDynamicProg = self.__solution
@@ -97,13 +102,6 @@ class Solver(object):
             else:
                 self.__clientServed.append(0)
 
-        '''
-        print("DinamycRep", len(self.__repDynamicProg))
-        print(self.__repDynamicProg)
-        print("solutionRep", len(self.__clientServed))
-        print(self.__clientServed)
-        '''
-
         return self.__repDynamicProg
 
     def createTruckSolution(self):
@@ -111,47 +109,24 @@ class Solver(object):
             if i >= 0:
                 self.__newTruckSolution.append(i)
     
-    '''
-    def Ti_mais(self, i):
-        # Procura o próximo número negativo a partir do ponto dado
-        pontoDi = -1
-        for j in range(ponto + 1, len(self.__repDynamicProg)):
-            if self.__repDynamicProg[i] < 0:
-                pontoDi = j
-                break
-        
-        # Se não houver próximo número negativo, retorna uma lista vazia
-        if pontoDi == -1:
-            return []
-        
-        # Encontra os números positivos a seguir até o próximo negativo
-        positivos_apos_negativo = []
-        for i in range(pontoDi + 1, len(self.__repDynamicProg)):
-            if self.__repDynamicProg[i] >= 0:
-                positivos_apos_negativo.append(self.__repDynamicProg[i])
-            else:
-                break
-        
-        return positivos_apos_negativo
-    '''
 
-    def E_mais(self, i, vectorTi):
-        minimumTime = np.inf
-        #self.__vectorEmais = []
+    def E_mais(self, i, di, vectorTi):
+        #minimumTime = np.inf
+        self.__vectorEmais = []
 
-        self.__vectorEmais = vectorTi
-        return self.__vectorEmais
-        '''
+        #self.__vectorEmais = vectorTi #caso nao tenha a matriz dos drones, utilizar essa
+        #return self.__vectorEmais  #caso nao tenha a matriz dos drones, utilizar essa
+        
         for k in vectorTi:
-            if self.getTime(i,k) + 1 + self.__vectorSigma[k]*1 <= self.endurance and self.getDroneTime(i,j,k) + self.__vectorSigma[k]*1 <= self.endurance:
+            if self.getTime(i,k) + 1 + self.__vectorSigma[k]*1 <= self.__endurance and self.getDroneTime2(i,di,k) + self.__vectorSigma[k]*1 <= self.__endurance:
                 self.__vectorEmais.append(k)
         
         return self.__vectorEmais
-        '''
+        
 
     def Cll(self, i, di, Ti_mais):
         #Calcular T(i)+ e E+
-        self.E_mais(i, Ti_mais)
+        self.E_mais(i,di, Ti_mais)
 
         if len(self.__vectorEmais) == 0:
             return np.inf
@@ -159,11 +134,11 @@ class Solver(object):
         minimumTime = np.inf
         for k in self.__vectorEmais:
             
-            a = self.getTime(i,k) + 1 + self.__vectorSigma[k]*1
-            #b = self.getDroneTime(i,di,k) + self.__vectorSigma[k]*1 
+            a = self.getTime2(i,k) + 1 + self.__vectorSigma[k]*1
+            b = self.getDroneTime(i,di,k) + self.__vectorSigma[k]*1 
             
-            #newTime = max(a,b)+ self.__vectorC[k]
-            newTime = a + self.__vectorC[k]
+            newTime = max(a,b)
+            #newTime = a + self.__vectorC[k]
             #print(f"verificando - k, newTime, a, vectorC[k]: {k}, {newTime}, {a}, {self.__vectorC[k]}")
             if newTime < minimumTime:
                 minimumTime = newTime
@@ -185,7 +160,7 @@ class Solver(object):
 
         #print("\nCalculo do Cmt")
         for k in Ti:
-            newMinimo = self.getTime(i,k) + self.__vectorC[k]
+            newMinimo = self.getTime2(i,k) + self.__vectorC[k]
             if newMinimo < minimumTime:
                 minimumTime = newMinimo
                 pointK = k            
@@ -202,20 +177,23 @@ class Solver(object):
         self.__vectorC = [0] * (n)
         self.__vectorSigma = self.__vectorC
 
-        '''
-        
-        print("tamanho do vetor C: ", len(self.__vectorC))
-        print("tamanho do n: ", n)
-        '''
-
         i = n-1
-        while self.__repDynamicProg[i] >= 0:
+        while self.__repDynamicProg[i] >= 0:           
             Ti_mais.append(self.__repDynamicProg[i])  #Ti_mais.append(i)
+            if i+1 < n:
+                self.__vectorC[i] = self.getTime2(i, i+1) + self.__vectorC[i+1]
+            else:
+                self.__vectorC[i] = self.getTime2(i, n-1)
             i -= 1
         
-        t = i-1
+        
         Ti = []
         di = i
+
+        Cll = self.Cll(i,di, Ti_mais)
+        self.__vectorC[i] = Cll + self.__vectorC[i+1]
+        
+        t = i-1
         for i in range(t, -1, -1):            
             Cmt, k = self.Cmt(i, Ti)
             Cll = self.Cll(i,di, Ti_mais)
@@ -228,14 +206,17 @@ class Solver(object):
             if self.__repDynamicProg[i] >= 0:  
                 Ti.append(self.__repDynamicProg[i]) #Ti.append(i)  
                 if Cmt < Cll:
-                    self.__vectorC[i] = Cmt
+                    self.__vectorC[i] = Cmt + self.__vectorC[i+1]
                 else:
-                    self.__vectorC[i] = Cll
+                    self.__vectorC[i] = Cll + self.__vectorC[i+1]
             else:
                 Ti_mais = []
                 Ti_mais = Ti
                 Ti = []
                 di = i
+
+                self.__vectorC[i] = Cll + self.__vectorC[i+1]
+                
                 if Cmt > Cll:
                     self.__vectorSigma[i] = 1
                 else:
