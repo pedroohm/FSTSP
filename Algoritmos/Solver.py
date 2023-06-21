@@ -82,7 +82,7 @@ class Solver(object):
     def getDroneTime(self, i, j, k):
         return float(self.__droneMatrix[self.__solution[i]][self.__solution[j]]) + float(self.__droneMatrix[self.__solution[j]][self.__solution[k]]) 
 
-    @profile
+    #@profile
     def getTime2(self, _from, _to):
         return float(self.__truckMatrix[self.__repDynamicProg[_from]][self.__repDynamicProg[_to]])
     def getDroneTime2(self, i, j, k):
@@ -204,11 +204,6 @@ class Solver(object):
             Cmt, k = self.Cmt(i, Ti)
             Cll, j = self.Cll(i,di, Ti_mais)
 
-            print("indice analisado: ", i)
-            print("ponto di:", di)
-            print(f"Cmt = {Cmt}, pontoK = {k}")
-            print(f"Cll = {Cll}")
-
             if self.__repDynamicProg[i] >= 0:  
                 Ti.append(self.__repDynamicProg[i]) #Ti.append(i)  
                 if Cmt < Cll:
@@ -238,6 +233,10 @@ class Solver(object):
             print("conjunto Sigma:", self.__vectorSigma) 
             print("conjunto Ci:", self.__vectorC)
             print("vetor repDynamicProg: ", self.__repDynamicProg)
+            print("indice analisado: ", i)
+            print("ponto di:", di)
+            print(f"Cmt = {Cmt}, pontoK = {k}")
+            print(f"Cll = {Cll}, pontoJ = {j}")
 
         return self.__vectorC            
 
