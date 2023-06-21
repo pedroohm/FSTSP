@@ -226,7 +226,7 @@ class Solver(object):
 
                 
                 if Cmt > Cll:
-                    self.__vectorSigma[i] = 1
+                    self.__vectorSigma[j] = 1
                 else:
                     self.__vectorSigma[k] = 1
 
