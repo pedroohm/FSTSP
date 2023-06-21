@@ -1,8 +1,10 @@
 import heapq
 from random import randint
+import memory_profiler #import profile
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 import numpy as np
+
 
 class Solver(object):
     def __init__(self, truckMatrix, droneMatrix, nodes, st, sr, endurance):
@@ -25,9 +27,11 @@ class Solver(object):
         self.__vectorEmais = []
         self.__repDynamicProg = []
         self.__newTruckSolution = []
+
         self.__pointAdressing = []
         self.__isLaunch = []
         self.__isCollect = []
+
         self.__clientServed = []
 
 
@@ -78,6 +82,7 @@ class Solver(object):
     def getDroneTime(self, i, j, k):
         return float(self.__droneMatrix[self.__solution[i]][self.__solution[j]]) + float(self.__droneMatrix[self.__solution[j]][self.__solution[k]]) 
 
+    @profile
     def getTime2(self, _from, _to):
         return float(self.__truckMatrix[self.__repDynamicProg[_from]][self.__repDynamicProg[_to]])
     def getDroneTime2(self, i, j, k):
@@ -92,16 +97,8 @@ class Solver(object):
                 if r <= 0.5 and (self.__repDynamicProg[i-1] >= 0):
                     self.__repDynamicProg[i] = -self.__repDynamicProg[i]
         
-        return self.__repDynamicProg
-        
-        
-        # representação auxiliar para mostrar quais os pontos foram atendidos pelo drone (1)
-        for i in range(len(self.__repDynamicProg)):
-            if self.__repDynamicProg[i] < 0:
-                self.__clientServed.append(1)
-            else:
-                self.__clientServed.append(0)
-
+        print("Representation ", self.__repDynamicProg)
+        print("Solution ", self.__solution)
         return self.__repDynamicProg
 
     def createTruckSolution(self):

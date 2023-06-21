@@ -23,7 +23,7 @@ for folder in folders: # Percorre os diretórios da pasta raiz
     solver = Solver(reader.getTruckMatrix(), reader.getDroneMatrix(), reader.getNodes(), 1, 1, 20)
 
     startTime = time.time()
-    solver.HVMP(1)
+    solver.HVMP(2)
 
     print("inicio da solucao", folder)
     solver.plotarSolucao(folder + ' in ' + sheetName + ' inicial')
