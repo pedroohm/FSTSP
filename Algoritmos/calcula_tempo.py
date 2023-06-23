@@ -9,7 +9,7 @@ class Calcula_tempo(object):
         self.__truckMatrix = [[]]
         self.__truckMatrix = []
         
-    def distanciaEuclidiana(self, x1, x2, y1, y2, velocidade=20):
+    def distanciaEuclidiana(self, x1, x2, y1, y2, velocidade=40):
         distancia = math.sqrt((x2-x1)**2 + (y2-y1)**2)
         tempo = distancia / velocidade
         return tempo
@@ -18,7 +18,6 @@ class Calcula_tempo(object):
         distancia = abs(x2-x1) + abs(y2-y1)
         tempo = distancia / velocidade
         return tempo
-
 
     def readNodes(self):
         file = open("nodes.csv", 'r')
@@ -53,7 +52,11 @@ class Calcula_tempo(object):
         for i in range(n):
             x1 = float(self.__nodes[i][1])
             y1 = float(self.__nodes[i][2])
-            #print(x1, y1)
+
+            if i==n-1:
+                for j in range(n):
+                    self.__truckMatrix[i][j] = 0
+                continue
             
             for j in range(n):
                 if i==j:
@@ -61,45 +64,48 @@ class Calcula_tempo(object):
                 else:
                     x2 = float(self.__nodes[j][1])
                     y2 = float(self.__nodes[j][2])
-                    #print(self.distanciaManhattan(x1, y1, x2, y2))
 
                     self.__truckMatrix[i][j] = self.distanciaManhattan(x1, y1, x2, y2)
                     self.__truckMatrix[j][i] = self.__truckMatrix[i][j]
+            
         return self.__truckMatrix
     
     def fillDronematrix(self):
         n = len(self.__nodes)
-        
         self.__droneMatrix = self.inicializar_matriz(n,n)
-        
         for i in range(n):
-            x2 = float(self.__nodes[i][1])
-            y2 = float(self.__nodes[i][2])
+            x1 = float(self.__nodes[i][1])
+            y1 = float(self.__nodes[i][2])
+
+            if i==n-1:
+                for j in range(n):
+                    self.__truckMatrix[i][j] = 0
+                continue
             
             for j in range(n):
                 if i==j:
                     self.__droneMatrix[i][i] = 0
                 else:
-                    x1 = float(self.__nodes[j][1])
-                    y1 = float(self.__nodes[j][2])
-
-                    self.__droneMatrix[i][j] = self.distanciaEuclidiana(x1, y1, x2, y2)
+                    x2 = float(self.__nodes[j][1])
+                    y2 = float(self.__nodes[j][2])
+                    self.__droneMatrix[i][j] = self.distanciaEuclidiana(x1, x2, y1, y2)
                     self.__droneMatrix[j][i] = self.__droneMatrix[i][j]
         return self.__droneMatrix
-            
-    def imprimeTruckmatrix(self):
-        print("tempos do caminhao")
-        for i in range (len(self.__truckMatrix)):
-            for j in range (len(self.__truckMatrix)):
-                print(f"{self.__truckMatrix[i][j]} ", end="") 
-            print()
 
-    def imprime(self):
-        print(len(self.__nodes))
-        print(self.__nodes)
-        print(self.__truckMatrix)
-        print(self.__truckMatrix)
+    def saveTruckmatrix(self):
+        caminho_arquivo = 'tau.csv'
 
+        with open(caminho_arquivo, 'w', newline='') as arquivo_csv:
+            writer = csv.writer(arquivo_csv)
+            writer.writerows(self.__truckMatrix)
+    
+    def saveDroneMatrix(self):
+        caminho_arquivo = 'tauprime.csv'
+
+        with open(caminho_arquivo, 'w', newline='') as arquivo_csv:
+            writer = csv.writer(arquivo_csv)
+            writer.writerows(self.__droneMatrix)
+    
 
 # Funções auxiliares
 def remove_values_from_list(the_list, val):
@@ -116,27 +122,7 @@ def stringToIntArray(str):
 nodos = Calcula_tempo()
 
 nodos.readNodes()
-
-#nodos.imprime()
-#nodos.imprimeTruckmatrix()
-#nodos.fillTruckmatrix()
-#nodos.imprimeTruckmatrix()
-
-
-#Escreve tempo para fazer a rota de caminhão
-caminho_arquivo = 'tau.csv'
-
-# Escrever os dados no arquivo CSV
-with open(caminho_arquivo, 'w', newline='') as arquivo_csv:
-    writer = csv.writer(arquivo_csv)
-    writer.writerows(nodos.fillTruckmatrix())
-
-# Revisar calculos
-'''
-caminho_arquivo2 = 'tauprime.csv'
-
-# Escrever os dados no arquivo CSV
-with open(caminho_arquivo2, 'w', newline='') as arquivo_csv:
-    writer = csv.writer(arquivo_csv)
-    writer.writerows(nodos.fillDronematrix())
-'''
+nodos.fillTruckmatrix()
+nodos.fillDronematrix()
+nodos.saveTruckmatrix()
+nodos.saveDroneMatrix()

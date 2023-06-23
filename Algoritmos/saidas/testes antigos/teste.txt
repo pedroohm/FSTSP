@@ -1,5 +1,4 @@
-Solucao inicial para: test11
-0 8 6 1 5 3 4 7inicio da solucao test11
-termino da solucao test11
-Representation  [0, -8, 6, 1, 5, 7, 4, -3, 9, 2, 10]
-Solution  [0, -8, 6, 1, 5, 7, 4, -3, 9, 2, 10]
+Solucao inicial para: prv14
+0 10 13 7 12 8 2 6 9 5 3 4 11 1 14 
+Solucao final para: prv14
+0 1 13 7 12 11 4 3 6 9 5 2 8 10 14 
