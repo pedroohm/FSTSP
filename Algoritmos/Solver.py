@@ -117,6 +117,7 @@ class Solver(object):
             if self.getTime(i,k) + 1 + self.__vectorSigma[k]*1 <= self.__endurance and self.getDroneTime2(i,di,k) + self.__vectorSigma[k]*1 <= self.__endurance:
                 vectorE_mais.append(k)
         
+        print("E_mais: ", vectorE_mais)
         return vectorE_mais
         
 
@@ -129,7 +130,7 @@ class Solver(object):
         
         time = np.inf
 
-        #print("\nMostrando vetor E_mais: ", vectorE_mais)
+        print("\nMostrando vetor E_mais: ", vectorE_mais)
         for k in vectorE_mais:
             
             a = self.getTime2(i,k) + 1 + self.__vectorSigma[k]*1
@@ -146,7 +147,7 @@ class Solver(object):
                 #print(self.__vectorC[self.__repDynamicProg.index(k)])
                 #print(f"k: {k}, self.__repDynamicProg.index(k): {self.__repDynamicProg.index(k)}; vetorC no indice de k: {self.__vectorC[self.__repDynamicProg.index(k)]}")
             #print("tempo minimo do Cll ", time)
-        
+        print(f"tempo minimo do Cll = {time}, pontoK = {ponto}")
         return time, ponto
 
     #Calcula tempo para mover o caminhao a partir do nó i
@@ -193,11 +194,6 @@ class Solver(object):
         Ti = []
         di = i
 
-        '''
-        Cll = self.Cll(i,di, Ti_mais)
-        self.__vectorC[i] = Cll + self.__vectorC[i+1]
-        self.__vectorSigma[i] = 1
-        '''
 
         t = i-1
         for i in range(t, -1, -1):            
@@ -233,7 +229,7 @@ class Solver(object):
             print("conjunto Sigma:", self.__vectorSigma) 
             print("conjunto Ci:", self.__vectorC)
             print("vetor repDynamicProg: ", self.__repDynamicProg)
-            print("indice analisado: ", i)
+            print("elemento analisado: ", self.__repDynamicProg[i])
             print("ponto di:", di)
             print(f"Cmt = {Cmt}, pontoK = {k}")
             print(f"Cll = {Cll}, pontoJ = {j}")
