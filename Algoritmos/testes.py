@@ -23,6 +23,7 @@ for folder in folders: # Percorre os diretórios da pasta raiz
     solver = Solver(reader.getTruckMatrix(), reader.getDroneMatrix(), reader.getNodes(), 1, 1, 20)
 
     startTime = time.time()
+    
     solver.HVMP(2)
 
     print("inicio da solucao", folder)
@@ -46,7 +47,9 @@ for folder in folders: # Percorre os diretórios da pasta raiz
     solver.plotarSolucao(folder + ' in ' + sheetName + ' final')
     print("termino da solucao", folder)
 
-    solver.createDynamicRepresentation()
+    #solver.createDynamicRepresentation()
+    valores = [0, -10, 9, 5, 6, 3, 4, 2, -8, 11, 12, 7, -13, 1, 14]
+    solver.setRepresentation(valores)
     solver.fillCvector()
 
     sheet1.append((folder, result, endTime - startTime))
