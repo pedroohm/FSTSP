@@ -122,6 +122,7 @@ class Solver(object):
         
 
     def Cll(self, i, di, Ti_mais):
+        print("\n----------Calculo do Cll----------")
         #Calcular T(i)+ e E+
         vectorE_mais = self.E_mais(i,di, Ti_mais)
 
@@ -144,14 +145,14 @@ class Solver(object):
             if newTime < time:
                 time = newTime
                 ponto = k
-                #print(self.__vectorC[self.__repDynamicProg.index(k)])
-                #print(f"k: {k}, self.__repDynamicProg.index(k): {self.__repDynamicProg.index(k)}; vetorC no indice de k: {self.__vectorC[self.__repDynamicProg.index(k)]}")
-            #print("tempo minimo do Cll ", time)
-        #print(f"tempo minimo do Cll = {time}, pontoK = {ponto}")
+        
+        print("----------Fim do Cll----------")
+
         return time, ponto
 
     #Calcula tempo para mover o caminhao a partir do nó i
     def Cmt(self, i, Ti):
+        print("\n----------Calculo do Cmt----------")
         #retorna em qual posicao o elemento i esta no array
         #indice = self.__repDynamicProg.index(i)         
 
@@ -162,13 +163,14 @@ class Solver(object):
         minimumTime = np.inf
         pointK = 0
 
-        #print("\nCalculo do Cmt")
         for k in Ti:
             newMinimo = self.getTime2(i,k) + self.__vectorC[k]
             if newMinimo < minimumTime:
                 minimumTime = newMinimo
                 pointK = k            
-            #print("tempo minimo e ponto k: ", minimo, pointK)
+            print("tempo minimo e ponto k: ", minimumTime, pointK)
+        
+        print("----------Fim do Cmt----------")
         
         return minimumTime, pointK
 
@@ -233,13 +235,10 @@ class Solver(object):
                 else:
                     self.__vectorSigma[k] = 1
 
-            
-
         return self.__vectorC 
 
     def setRepresentation(self, lista):
         self.__repDynamicProg = lista
-
 
 
     def calcDist(self):

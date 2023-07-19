@@ -15,6 +15,9 @@ sheet1.append(firstLine)
 
 folders = os.listdir(TSPDReader1.directory)
 for folder in folders: # Percorre os diretórios da pasta raiz
+
+    print("inicio da solucao para ", folder)
+
     reader = TSPDReader1()
 
     reader.read(folder)
@@ -25,18 +28,14 @@ for folder in folders: # Percorre os diretórios da pasta raiz
     
     solver.HVMP(1)
 
-    print("inicio da solucao para ", folder)
-
-    #result = solver.localSearch2OPT()
     result = solver.RVND()
-    endTime = time.time()
+    endTime = time.time()   
 
-    print("termino da solucao para ", folder)
-
-    #solver.createDynamicRepresentation()
     valores = [0, -10, 9, 5, 6, 3, 4, 2, -8, 11, 12, 7, -13, 1, 14]
     solver.setRepresentation(valores)
     solver.fillCvector()
 
     sheet1.append((folder, result, endTime - startTime))
     sheet.save('./saidas/' + sheetName + '.xlsx')
+
+    print("termino da solucao para ", folder)
