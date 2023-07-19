@@ -7,7 +7,6 @@ import time
 
 
 sheetName = input("Digite o nome do arquivo com os resultados: ")
-arquivo = open('./saidas/'+sheetName+'.txt', 'w')
 firstLine = ("Instância", "Tempo", "Tempo de execução")
 sheet = Workbook()
 sheet1 = sheet.active
@@ -24,28 +23,15 @@ for folder in folders: # Percorre os diretórios da pasta raiz
 
     startTime = time.time()
     
-    solver.HVMP(2)
+    solver.HVMP(1)
 
-    print("inicio da solucao", folder)
-    solver.plotarSolucao(folder + ' in ' + sheetName + ' inicial')
-    arquivo.write("Solucao inicial para: "+ folder + '\n')
-    solucao = solver.getSolution()
-    for i in range(len(solucao)):
-        arquivo.write(str(solucao[i])+' ')
-    arquivo.write('\n')
+    print("inicio da solucao para ", folder)
 
     #result = solver.localSearch2OPT()
     result = solver.RVND()
     endTime = time.time()
 
-    arquivo.write("Solucao final para: "+ folder + '\n')
-    solucao = solver.getSolution()
-    for i in range(len(solucao)):
-        arquivo.write(str(solucao[i])+' ')
-    arquivo.write('\n')
-
-    solver.plotarSolucao(folder + ' in ' + sheetName + ' final')
-    print("termino da solucao", folder)
+    print("termino da solucao para ", folder)
 
     #solver.createDynamicRepresentation()
     valores = [0, -10, 9, 5, 6, 3, 4, 2, -8, 11, 12, 7, -13, 1, 14]
@@ -54,4 +40,3 @@ for folder in folders: # Percorre os diretórios da pasta raiz
 
     sheet1.append((folder, result, endTime - startTime))
     sheet.save('./saidas/' + sheetName + '.xlsx')
-arquivo.close()
