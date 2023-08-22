@@ -1,0 +1,4 @@
+Solucao inicial para: prv14
+0 10 7 13 1 12 11 8 2 6 5 9 3 4 14 
+Solucao final para: prv14
+

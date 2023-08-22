@@ -1,0 +1,65 @@
+Digite o nome do arquivo com os resultados: inicio da solucao test11
+termino da solucao test11
+Representation  [0, -8, 6, 1, -5, 3, 9, 7, 4, 2, 10]
+Solution  [0, -8, 6, 1, -5, 3, 9, 7, 4, 2, 10]
+indice analisado:  3
+ponto di: 4
+Cmt = inf, pontoK = None
+Cll = 2.3304
+
+
+##Testando funcionamento##
+indice analisado:  3
+conjunto Ti+: [10, 2, 4, 7, 9, 3]
+conjunto Ti: [1]
+conjunto Sigma: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+conjunto Ci: [0, 0, 0, 2.3304, 0, 4.894, 3.9562, 2.8373, 1.912, 0.9504, 0.0]
+vetor repDynamicProg:  [0, -8, 6, 1, -5, 3, 9, 7, 4, 2, 10]
+indice analisado:  2
+ponto di: 4
+Cmt = 1.5205, pontoK = 1
+Cll = 1.9504000000000001
+
+
+##Testando funcionamento##
+indice analisado:  2
+conjunto Ti+: [10, 2, 4, 7, 9, 3]
+conjunto Ti: [1, 6]
+conjunto Sigma: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+conjunto Ci: [0, 0, 1.5205, 2.3304, 0, 4.894, 3.9562, 2.8373, 1.912, 0.9504, 0.0]
+vetor repDynamicProg:  [0, -8, 6, 1, -5, 3, 9, 7, 4, 2, 10]
+indice analisado:  1
+ponto di: 4
+Cmt = 0.0, pontoK = 1
+Cll = 2.5013
+
+
+##Testando funcionamento##
+indice analisado:  0
+conjunto Ti+: [1, 6]
+conjunto Ti: []
+conjunto Sigma: [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+conjunto Ci: [0, 0, 1.5205, 2.3304, 0, 4.894, 3.9562, 2.8373, 1.912, 0.9504, 0.0]
+vetor repDynamicProg:  [0, -8, 6, 1, -5, 3, 9, 7, 4, 2, 10]
+indice analisado:  0
+ponto di: 1
+Cmt = inf, pontoK = None
+Cll = 4.1654
+
+
+##Testando funcionamento##
+indice analisado:  0
+conjunto Ti+: [1, 6]
+conjunto Ti: [0]
+conjunto Sigma: [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+conjunto Ci: [4.1654, 0, 1.5205, 2.3304, 0, 4.894, 3.9562, 2.8373, 1.912, 0.9504, 0.0]
+vetor repDynamicProg:  [0, -8, 6, 1, -5, 3, 9, 7, 4, 2, 10]
+Filename: /home/pedro/UFV/ic/FSTSP/Algoritmos/Solver.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    85  119.109 MiB  119.109 MiB          31       @profile
+    86                                             def getTime2(self, _from, _to):
+    87  119.109 MiB    0.000 MiB          31           return float(self.__truckMatrix[self.__repDynamicProg[_from]][self.__repDynamicProg[_to]])
+
+

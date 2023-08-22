@@ -1,174 +1,292 @@
-Digite o nome do arquivo com os resultados: inicio da solucao prv14
-termino da solucao prv14
-Representation  [0, -10, 9, 5, 6, 3, 4, 2, -8, 11, 12, 7, -13, 1, 14]
-Solution  [0, -10, 9, 5, 6, 3, 4, 2, -8, 11, 12, 7, -13, 1, 14]
-E_mais:  [14, 1]
+Digite o nome do arquivo com os resultados: inicio da solucao para  prv14
+
+----------Calculo do Cmt----------
+
+----------Calculo do Cll----------
+verificando - i, k, newTime, a, b, vectorC[k]: 2, 14, 1.65, 1.65, 1.219118534023661, 0.0
+verificando - i, k, newTime, a, b, vectorC[k]: 2, 1, 1.775, 0.625, 0.5344389581607987, 0
+----------Fim do Cll----------
 
 
 ##Testando funcionamento##
-indice analisado:  11
+conjunto Ti+: [14, 1]
+conjunto Ti: []
+conjunto Sigma: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+conjunto Ci: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1.15, 0.0]
+vetor repDynamicProg:  [0, -10, 9, 5, 6, 3, 4, 2, -8, 11, 12, 7, -13, 1, 14]
+elemento analisado:  7
+ponto di: -13
+Cmt = inf, pontoK = None
+Cll = 1.65, pontoJ = 14
+
+----------Calculo do Cmt----------
+tempo minimo e ponto k:  1.425 7
+----------Fim do Cmt----------
+
+----------Calculo do Cll----------
+verificando - i, k, newTime, a, b, vectorC[k]: -13, 14, 1.65, 1.65, 1.219118534023661, 0.0
+verificando - i, k, newTime, a, b, vectorC[k]: -13, 1, 1.775, 0.625, 0.5344389581607987, 0
+----------Fim do Cll----------
+
+
+##Testando funcionamento##
 conjunto Ti+: [14, 1]
 conjunto Ti: [7]
 conjunto Sigma: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-conjunto Ci: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2.55258206933312, 0, 1.15, 0.0]
+conjunto Ci: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1.65, 0, 1.15, 0.0]
 vetor repDynamicProg:  [0, -10, 9, 5, 6, 3, 4, 2, -8, 11, 12, 7, -13, 1, 14]
-indice analisado:  11
-ponto di: 12
-Cmt = inf, pontoK = None
-Cll = 2.55258206933312, pontoJ = 14
-E_mais:  [14, 1]
+elemento analisado:  12
+ponto di: -13
+Cmt = 1.425, pontoK = 7
+Cll = 1.65, pontoJ = 14
+
+----------Calculo do Cmt----------
+tempo minimo e ponto k:  1.4 7
+tempo minimo e ponto k:  1.4 7
+----------Fim do Cmt----------
+
+----------Calculo do Cll----------
+verificando - i, k, newTime, a, b, vectorC[k]: 7, 14, 2.55258206933312, 0.975, 2.55258206933312, 0.0
+verificando - i, k, newTime, a, b, vectorC[k]: 7, 1, 3.017902493470257, 1.4, 1.8679024934702573, 0
+----------Fim do Cll----------
 
 
 ##Testando funcionamento##
-indice analisado:  10
 conjunto Ti+: [14, 1]
 conjunto Ti: [7, 12]
 conjunto Sigma: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-conjunto Ci: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1.425, 2.55258206933312, 0, 1.15, 0.0]
+conjunto Ci: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1.425, 1.65, 0, 1.15, 0.0]
 vetor repDynamicProg:  [0, -10, 9, 5, 6, 3, 4, 2, -8, 11, 12, 7, -13, 1, 14]
-indice analisado:  10
-ponto di: 12
-Cmt = 1.425, pontoK = 7
-Cll = 2.925, pontoJ = 14
-E_mais:  [14, 1]
+elemento analisado:  11
+ponto di: -13
+Cmt = 1.4, pontoK = 7
+Cll = 2.55258206933312, pontoJ = 14
+
+----------Calculo do Cmt----------
+tempo minimo e ponto k:  1.825 7
+tempo minimo e ponto k:  1.825 7
+tempo minimo e ponto k:  1.65 11
+----------Fim do Cmt----------
+
+----------Calculo do Cll----------
+verificando - i, k, newTime, a, b, vectorC[k]: 2, 14, 1.65, 1.65, 1.219118534023661, 0.0
+verificando - i, k, newTime, a, b, vectorC[k]: 2, 1, 1.775, 0.625, 0.5344389581607987, 0
+----------Fim do Cll----------
 
 
 ##Testando funcionamento##
-indice analisado:  9
 conjunto Ti+: [14, 1]
 conjunto Ti: [7, 12, 11]
 conjunto Sigma: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-conjunto Ci: [0, 0, 0, 0, 0, 0, 0, 0, 0, 1.4, 1.425, 2.55258206933312, 0, 1.15, 0.0]
+conjunto Ci: [0, 0, 0, 0, 0, 0, 0, 0, 0, 1.4, 1.425, 1.65, 0, 1.15, 0.0]
 vetor repDynamicProg:  [0, -10, 9, 5, 6, 3, 4, 2, -8, 11, 12, 7, -13, 1, 14]
-indice analisado:  9
-ponto di: 12
-Cmt = 1.4, pontoK = 7
-Cll = 2.9, pontoJ = 14
-E_mais:  [14, 1]
-E_mais:  [7, 12, 11]
+elemento analisado:  -8
+ponto di: -13
+Cmt = 1.65, pontoK = 11
+Cll = 1.65, pontoJ = 14
+
+----------Calculo do Cll----------
+verificando - i, k, newTime, a, b, vectorC[k]: 2, 7, 4.316927070618917, 0.0, 2.666927070618917, 0
+verificando - i, k, newTime, a, b, vectorC[k]: 2, 12, 4.091927070618917, 0.0, 2.666927070618917, 0
+verificando - i, k, newTime, a, b, vectorC[k]: 2, 11, 3.2249999999999996, 1.825, 1.3334635353094586, 1.65
+----------Fim do Cll----------
+
+----------Calculo do Cmt----------
+
+----------Calculo do Cll----------
+verificando - i, k, newTime, a, b, vectorC[k]: 9, 7, 4.259443550826942, 0.75, 2.609443550826943, 0
+verificando - i, k, newTime, a, b, vectorC[k]: 9, 12, 4.034443550826943, 0.75, 2.609443550826943, 0
+verificando - i, k, newTime, a, b, vectorC[k]: 9, 11, 2.7249999999999996, 1.325, 1.2759800155174845, 1.65
+----------Fim do Cll----------
 
 
 ##Testando funcionamento##
-indice analisado:  7
 conjunto Ti+: [7, 12, 11]
 conjunto Ti: []
-conjunto Sigma: [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0]
-conjunto Ci: [0, 0, 0, 0, 0, 0, 0, 0, 0, 1.4, 1.425, 2.55258206933312, 0, 1.15, 0.0]
+conjunto Sigma: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0]
+conjunto Ci: [0, 0, 0, 0, 0, 0, 0, 0, 0, 1.4, 1.425, 1.65, 0, 1.15, 0.0]
 vetor repDynamicProg:  [0, -10, 9, 5, 6, 3, 4, 2, -8, 11, 12, 7, -13, 1, 14]
-indice analisado:  7
-ponto di: 8
-Cmt = 1.825, pontoK = 7
-Cll = 4.091927070618917, pontoJ = 12
-E_mais:  [7, 12, 11]
+elemento analisado:  2
+ponto di: -8
+Cmt = inf, pontoK = None
+Cll = 2.7249999999999996, pontoJ = 11
+
+----------Calculo do Cmt----------
+tempo minimo e ponto k:  1.35 2
+----------Fim do Cmt----------
+
+----------Calculo do Cll----------
+verificando - i, k, newTime, a, b, vectorC[k]: 6, 7, 4.456979738138596, 0.575, 2.806979738138596, 2.7249999999999996
+verificando - i, k, newTime, a, b, vectorC[k]: 6, 12, 4.231979738138596, 0.575, 2.806979738138596, 0
+verificando - i, k, newTime, a, b, vectorC[k]: 6, 11, 3.2, 1.8, 1.4735162028291375, 1.65
+----------Fim do Cll----------
 
 
 ##Testando funcionamento##
-indice analisado:  7
 conjunto Ti+: [7, 12, 11]
 conjunto Ti: [2]
-conjunto Sigma: [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0]
-conjunto Ci: [0, 0, 0, 0, 0, 0, 0, 4.091927070618917, 0, 1.4, 1.425, 2.55258206933312, 0, 1.15, 0.0]
+conjunto Sigma: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0]
+conjunto Ci: [0, 0, 0, 0, 0, 0, 0, 2.7249999999999996, 0, 1.4, 1.425, 1.65, 0, 1.15, 0.0]
 vetor repDynamicProg:  [0, -10, 9, 5, 6, 3, 4, 2, -8, 11, 12, 7, -13, 1, 14]
-indice analisado:  7
-ponto di: 8
-Cmt = inf, pontoK = None
-Cll = 4.091927070618917, pontoJ = 12
-E_mais:  [7, 12, 11]
+elemento analisado:  4
+ponto di: -8
+Cmt = 1.35, pontoK = 2
+Cll = 3.2, pontoJ = 11
+
+----------Calculo do Cmt----------
+tempo minimo e ponto k:  0.825 2
+tempo minimo e ponto k:  0.55 4
+----------Fim do Cmt----------
+
+----------Calculo do Cll----------
+verificando - i, k, newTime, a, b, vectorC[k]: 5, 7, 4.242431366510876, 0.625, 2.592431366510876, 2.7249999999999996
+verificando - i, k, newTime, a, b, vectorC[k]: 5, 12, 4.017431366510876, 0.625, 2.592431366510876, 0
+verificando - i, k, newTime, a, b, vectorC[k]: 5, 11, 2.8, 1.4, 1.2589678312014172, 1.65
+----------Fim do Cll----------
 
 
 ##Testando funcionamento##
-indice analisado:  6
 conjunto Ti+: [7, 12, 11]
 conjunto Ti: [2, 4]
-conjunto Sigma: [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0]
-conjunto Ci: [0, 0, 0, 0, 0, 0, 1.35, 4.091927070618917, 0, 1.4, 1.425, 2.55258206933312, 0, 1.15, 0.0]
+conjunto Sigma: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0]
+conjunto Ci: [0, 0, 0, 0, 0, 0, 1.35, 2.7249999999999996, 0, 1.4, 1.425, 1.65, 0, 1.15, 0.0]
 vetor repDynamicProg:  [0, -10, 9, 5, 6, 3, 4, 2, -8, 11, 12, 7, -13, 1, 14]
-indice analisado:  6
-ponto di: 8
-Cmt = 1.35, pontoK = 2
-Cll = 4.737888956991215, pontoJ = 12
-E_mais:  [7, 12, 11]
+elemento analisado:  3
+ponto di: -8
+Cmt = 0.55, pontoK = 4
+Cll = 2.8, pontoJ = 11
+
+----------Calculo do Cmt----------
+tempo minimo e ponto k:  0.475 2
+tempo minimo e ponto k:  0.0 4
+tempo minimo e ponto k:  0.0 4
+----------Fim do Cmt----------
+
+----------Calculo do Cll----------
+verificando - i, k, newTime, a, b, vectorC[k]: 4, 7, 4.962888956991215, 0.85, 3.312888956991215, 2.7249999999999996
+verificando - i, k, newTime, a, b, vectorC[k]: 4, 12, 4.737888956991215, 0.85, 3.312888956991215, 0
+verificando - i, k, newTime, a, b, vectorC[k]: 4, 11, 4.074999999999999, 2.675, 1.9794254216817566, 1.65
+----------Fim do Cll----------
 
 
 ##Testando funcionamento##
-indice analisado:  5
 conjunto Ti+: [7, 12, 11]
 conjunto Ti: [2, 4, 3]
-conjunto Sigma: [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0]
-conjunto Ci: [0, 0, 0, 0, 0, 0.55, 1.35, 4.091927070618917, 0, 1.4, 1.425, 2.55258206933312, 0, 1.15, 0.0]
+conjunto Sigma: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0]
+conjunto Ci: [0, 0, 0, 0, 0, 0.55, 1.35, 2.7249999999999996, 0, 1.4, 1.425, 1.65, 0, 1.15, 0.0]
 vetor repDynamicProg:  [0, -10, 9, 5, 6, 3, 4, 2, -8, 11, 12, 7, -13, 1, 14]
-indice analisado:  5
-ponto di: 8
-Cmt = 0.55, pontoK = 4
-Cll = 4.55, pontoJ = 11
-E_mais:  [7, 12, 11]
+elemento analisado:  6
+ponto di: -8
+Cmt = 0.0, pontoK = 4
+Cll = 4.074999999999999, pontoJ = 11
+
+----------Calculo do Cmt----------
+tempo minimo e ponto k:  0.125 2
+tempo minimo e ponto k:  0.125 2
+tempo minimo e ponto k:  0.0 3
+tempo minimo e ponto k:  0.0 3
+----------Fim do Cmt----------
+
+----------Calculo do Cll----------
+verificando - i, k, newTime, a, b, vectorC[k]: 3, 7, 4.878522901134181, 1.125, 3.2285229011341814, 2.7249999999999996
+verificando - i, k, newTime, a, b, vectorC[k]: 3, 12, 4.653522901134181, 1.125, 3.2285229011341814, 0
+verificando - i, k, newTime, a, b, vectorC[k]: 3, 11, 3.55, 2.15, 1.8950593658247226, 1.65
+----------Fim do Cll----------
 
 
 ##Testando funcionamento##
-indice analisado:  4
 conjunto Ti+: [7, 12, 11]
 conjunto Ti: [2, 4, 3, 6]
-conjunto Sigma: [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0]
-conjunto Ci: [0, 0, 0, 0, 0.0, 0.55, 1.35, 4.091927070618917, 0, 1.4, 1.425, 2.55258206933312, 0, 1.15, 0.0]
+conjunto Sigma: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0]
+conjunto Ci: [0, 0, 0, 0, 0.0, 0.55, 1.35, 2.7249999999999996, 0, 1.4, 1.425, 1.65, 0, 1.15, 0.0]
 vetor repDynamicProg:  [0, -10, 9, 5, 6, 3, 4, 2, -8, 11, 12, 7, -13, 1, 14]
-indice analisado:  4
-ponto di: 8
-Cmt = 0.0, pontoK = 4
-Cll = 4.199999999999999, pontoJ = 11
-E_mais:  [7, 12, 11]
+elemento analisado:  5
+ponto di: -8
+Cmt = 0.0, pontoK = 3
+Cll = 3.55, pontoJ = 11
+
+----------Calculo do Cmt----------
+tempo minimo e ponto k:  0.0 2
+tempo minimo e ponto k:  0.0 2
+tempo minimo e ponto k:  0.0 2
+tempo minimo e ponto k:  0.0 2
+tempo minimo e ponto k:  0.0 2
+----------Fim do Cmt----------
+
+----------Calculo do Cll----------
+verificando - i, k, newTime, a, b, vectorC[k]: 11, 7, 3.9597447447977903, 1.4, 2.3097447447977904, 2.7249999999999996
+verificando - i, k, newTime, a, b, vectorC[k]: 11, 12, 3.7347447447977906, 1.4, 2.3097447447977904, 0
+verificando - i, k, newTime, a, b, vectorC[k]: 11, 11, 2.425, 1.025, 0.9762812094883317, 1.65
+----------Fim do Cll----------
 
 
 ##Testando funcionamento##
-indice analisado:  3
 conjunto Ti+: [7, 12, 11]
 conjunto Ti: [2, 4, 3, 6, 5]
-conjunto Sigma: [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0]
-conjunto Ci: [0, 0, 0, 0.0, 0.0, 0.55, 1.35, 4.091927070618917, 0, 1.4, 1.425, 2.55258206933312, 0, 1.15, 0.0]
+conjunto Sigma: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0]
+conjunto Ci: [0, 0, 0, 0.0, 0.0, 0.55, 1.35, 2.7249999999999996, 0, 1.4, 1.425, 1.65, 0, 1.15, 0.0]
 vetor repDynamicProg:  [0, -10, 9, 5, 6, 3, 4, 2, -8, 11, 12, 7, -13, 1, 14]
-indice analisado:  3
-ponto di: 8
-Cmt = 0.0, pontoK = 3
-Cll = 3.8, pontoJ = 11
-E_mais:  [7, 12, 11]
+elemento analisado:  9
+ponto di: -8
+Cmt = 0.0, pontoK = 2
+Cll = 2.425, pontoJ = 11
+
+----------Calculo do Cmt----------
+tempo minimo e ponto k:  0.125 2
+tempo minimo e ponto k:  0.125 2
+tempo minimo e ponto k:  0.0 3
+tempo minimo e ponto k:  0.0 3
+tempo minimo e ponto k:  0.0 3
+tempo minimo e ponto k:  0.0 3
+----------Fim do Cmt----------
+
+----------Calculo do Cll----------
+verificando - i, k, newTime, a, b, vectorC[k]: 3, 7, 4.878522901134181, 1.125, 3.2285229011341814, 2.7249999999999996
+verificando - i, k, newTime, a, b, vectorC[k]: 3, 12, 4.653522901134181, 1.125, 3.2285229011341814, 0
+verificando - i, k, newTime, a, b, vectorC[k]: 3, 11, 3.55, 2.15, 1.8950593658247226, 1.65
+----------Fim do Cll----------
 
 
 ##Testando funcionamento##
-indice analisado:  2
 conjunto Ti+: [7, 12, 11]
 conjunto Ti: [2, 4, 3, 6, 5, 9]
-conjunto Sigma: [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0]
-conjunto Ci: [0, 0, 0.0, 0.0, 0.0, 0.55, 1.35, 4.091927070618917, 0, 1.4, 1.425, 2.55258206933312, 0, 1.15, 0.0]
+conjunto Sigma: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0]
+conjunto Ci: [0, 0, 0.0, 0.0, 0.0, 0.55, 1.35, 2.7249999999999996, 0, 1.4, 1.425, 1.65, 0, 1.15, 0.0]
 vetor repDynamicProg:  [0, -10, 9, 5, 6, 3, 4, 2, -8, 11, 12, 7, -13, 1, 14]
-indice analisado:  2
-ponto di: 8
-Cmt = 0.0, pontoK = 2
-Cll = 3.725, pontoJ = 11
-E_mais:  [7, 12, 11]
-E_mais:  [2, 4, 3, 6, 5, 9]
+elemento analisado:  -10
+ponto di: -8
+Cmt = 0.0, pontoK = 3
+Cll = 3.55, pontoJ = 11
+
+----------Calculo do Cll----------
+verificando - i, k, newTime, a, b, vectorC[k]: 0, 2, 3.8749999999999996, 1.15, 0.9737813790038414, 0.0
+verificando - i, k, newTime, a, b, vectorC[k]: 0, 4, 2.975, 1.625, 1.1557475946381843, 0.0
+verificando - i, k, newTime, a, b, vectorC[k]: 0, 3, 1.7750000000000001, 1.225, 0.8707037383633999, 0.0
+verificando - i, k, newTime, a, b, vectorC[k]: 0, 6, 2.5, 2.5, 1.7929970756482356, 1.35
+verificando - i, k, newTime, a, b, vectorC[k]: 0, 5, 1.975, 1.975, 1.5080811775624978, 0.55
+verificando - i, k, newTime, a, b, vectorC[k]: 0, 9, 2.3269403262844697, 1.9, 2.3269403262844697, 1.4
+----------Fim do Cll----------
+
+----------Calculo do Cmt----------
+
+----------Calculo do Cll----------
+verificando - i, k, newTime, a, b, vectorC[k]: 0, 2, 3.8749999999999996, 1.15, 0.9737813790038414, 0.0
+verificando - i, k, newTime, a, b, vectorC[k]: 0, 4, 2.975, 1.625, 1.1557475946381843, 0.0
+verificando - i, k, newTime, a, b, vectorC[k]: 0, 3, 1.7750000000000001, 1.225, 0.8707037383633999, 0.0
+verificando - i, k, newTime, a, b, vectorC[k]: 0, 6, 2.5, 2.5, 1.7929970756482356, 1.35
+verificando - i, k, newTime, a, b, vectorC[k]: 0, 5, 1.975, 1.975, 1.5080811775624978, 0.55
+verificando - i, k, newTime, a, b, vectorC[k]: 0, 9, 2.3269403262844697, 1.9, 2.3269403262844697, 1.4
+----------Fim do Cll----------
 
 
 ##Testando funcionamento##
-indice analisado:  0
 conjunto Ti+: [2, 4, 3, 6, 5, 9]
 conjunto Ti: []
-conjunto Sigma: [0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0]
-conjunto Ci: [0, 0, 0.0, 0.0, 0.0, 0.55, 1.35, 4.091927070618917, 0, 1.4, 1.425, 2.55258206933312, 0, 1.15, 0.0]
+conjunto Sigma: [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0]
+conjunto Ci: [0, 0, 0.0, 0.0, 0.0, 0.55, 1.35, 2.7249999999999996, 0, 1.4, 1.425, 1.65, 0, 1.15, 0.0]
 vetor repDynamicProg:  [0, -10, 9, 5, 6, 3, 4, 2, -8, 11, 12, 7, -13, 1, 14]
-indice analisado:  0
-ponto di: 1
-Cmt = 0.0, pontoK = 3
-Cll = 2.7750000000000004, pontoJ = 3
-E_mais:  [2, 4, 3, 6, 5, 9]
-
-
-##Testando funcionamento##
-indice analisado:  0
-conjunto Ti+: [2, 4, 3, 6, 5, 9]
-conjunto Ti: [0]
-conjunto Sigma: [0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0]
-conjunto Ci: [2.9, 0, 0.0, 0.0, 0.0, 0.55, 1.35, 4.091927070618917, 0, 1.4, 1.425, 2.55258206933312, 0, 1.15, 0.0]
-vetor repDynamicProg:  [0, -10, 9, 5, 6, 3, 4, 2, -8, 11, 12, 7, -13, 1, 14]
-indice analisado:  0
-ponto di: 1
+elemento analisado:  0
+ponto di: -10
 Cmt = inf, pontoK = None
-Cll = 2.9, pontoJ = 9
+Cll = 1.7750000000000001, pontoJ = 3
+termino da solucao para  prv14

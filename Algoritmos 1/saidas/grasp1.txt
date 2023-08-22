@@ -1,0 +1,4 @@
+Digite o nome do arquivo com os resultados: inicio da solucao prv14
+Inicio:  prv14
+Tempo da solução ótima:  False
+Final:  prv14

@@ -1,0 +1,4 @@
+Solucao inicial para: prv14
+0 10 13 7 1 12 1inicio da solucao prv14
+termino da solucao prv14
+ 13 7 12 11 8 2 4 3 6 5 9 10 14 
