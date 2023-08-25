@@ -23,7 +23,7 @@ for folder in folders: # Percorre os diretórios da pasta raiz
     solver = Solver(reader.getTruckMatrix(), reader.getDroneMatrix(), reader.getNodes(), 1, 1, 20)
 
     startTime = time.time()
-    solver.HVMP(1)
+    solver.HVMP(3)
     result = solver.RVND()
     endTime = time.time()
 

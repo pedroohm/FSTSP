@@ -21,8 +21,6 @@ class Solver(object):
         self.__truckSolution = []
         self.__representation = []
 
-
-
     # Funções auxiliares
     def printSolution(self):
         print("Time: ", self.__time)
@@ -92,8 +90,16 @@ class Solver(object):
             self.__time += float(self.__truckMatrix[self.__solution[i]][self.__solution[i + 1]])
 
     def createRepresentation(self):
-        representation = [0 for i in range(len(self.__solution) )] 
+        representation = [0 for i in range(len(self.__solution) )]
+
+        # debug
+        '''
+        for i in range(len(self.__droneSolution)):
+            print(self.__droneSolution[i][0], " - ", self.__droneSolution[i][1], " | ",self.__droneMatrix[self.__droneSolution[i][0]][self.__droneSolution[i][1]])
+        '''
+        
         for delivery in self.__droneSolution:
+            #print(f'delivery: {delivery}, index: {self.__solution.index(delivery[0])}, {self.__solution.index(delivery[1])}, {self.__solution.index(delivery[2])}')
             tspDroneLaunchIndex = self.__solution.index(delivery[0])
             tspDroneDeliveredIndex = self.__solution.index(delivery[1])
             tspDroneRecoverIndex = self.__solution.index(delivery[2])
@@ -104,6 +110,7 @@ class Solver(object):
                 representation[tspDroneLaunchIndex] = 1
                 tspDroneLaunchIndex += 1
         self.__representation = representation
+        print(self.__representation)
 
     def calculateTime(self):
         time = 0
@@ -113,7 +120,7 @@ class Solver(object):
         droneLaunch = -1
         for i in range(1, len(self.__solution)):
             if self.__representation[i] == 1 and droneAvailable:
-                if self.__nodes[self.__solution[i]][3] == 0:
+                if self.__nodes[self.__solution[i]][3] == 1: #original == 0
                     return False
                 droneAvailable = False
                 droneDelivery = self.__solution[i]
@@ -513,22 +520,30 @@ class Solver(object):
         bestTime = -1
         bestSol = []
         bestRepresentation = []
+
         while cont < repeat:
             self.__solution = []
             self.HVMP(m)
             #self.plotarSolucao('HVMP '+ str(cont) + ' ')
+
             self.RVND()
-            #self.plotarSolucao('RVND '+str(cont) + ' ')
+            #self.plotarSolucao(f'RVND {cont} ')
+
             self.split2()
             self.createRepresentation()
             #self.plotarSolucao('createRepresentation '+str(cont) + ' ', 2)
+
             self.droneRVND()
             #self.plotarSolucao('droneRVND '+str(cont) + ' ', 2)
+
             cont += 1
-            print(self.__solution)
-            print(self.__representation)
-            print(self.__droneSolution)
+            
+            #print(self.__solution)
+            #print(self.__representation)
+            #print(self.__droneSolution)
+
             if self.__time < bestTime or bestTime == -1:
+                
                 bestTime = self.__time
                 bestSol = self.__solution.copy()
                 bestRepresentation = self.__representation.copy()
@@ -537,19 +552,17 @@ class Solver(object):
         self.__representation = bestRepresentation
 
         print('Tempo da solução ótima: ', self.__time)
-        print(self.timeTruckGrasp())
-          
+        print('Solução ótima: ', self.__solution)
+        print('Truck solution: ', self.__truckSolution)
+        print('Representação: ', self.__representation)
+        #print('Solução do drone: ', self.__droneSolution)
+        #print('Drone deliveries: ', self.__droneDeliveries)
+        #print('CalcDist: ', self.calcDist())
+
+        #print(self.timeTruckGrasp())      
 
         return self.__time
     
-
-    def timeTruckGrasp(self):
-        #getTime(de, para)
-        result = 0
-        for i in range(len(self.__solution)-1):
-            result += self.getTime(self.__solution[i], self.__solution[i+1])
-            
-        return result
 
     def getDroneDeliveries(self):
         droneDeliveries = []  
@@ -572,7 +585,7 @@ class Solver(object):
         self.__droneDeliveries = droneDeliveries
 
     def split1(self):
-        # self.getDroneDeliveries()
+        self.getDroneDeliveries()
 
         arcs = []
         T = []
@@ -580,6 +593,7 @@ class Solver(object):
         for i in range(len(self.__solution) - 1):
             arcs.append((self.__solution[i], self.__solution[i+1], self.getTime(i,i+1)))
 
+        # print("imprimindo os arcos")
         # print(arcs)
 
         for i in range(len(self.__solution) - 2):
@@ -613,7 +627,9 @@ class Solver(object):
                         if V[i] > V[arc[0]] + arc[2]:
                             V[arc[1]] =  V[arc[0]] + arc[2]
                             P[arc[1]] = arc[0]
-        
+
+        print(f'P: {P} \n V: {V} \n T: {T}')
+
         return P, V, T
 
     def getDroneNode(self, T , launch, recover):
@@ -652,7 +668,7 @@ class Solver(object):
             i1Index = self.__solution.index(s[i + 1])
             if iIndex + 1 != i1Index:
                 droneNode = self.getDroneNode(T, s[i], s[i + 1])
-                droneSolution.append([s[i], droneNode, s[i + 1]])
+                droneSolution.append((s[i], droneNode, s[i + 1]))
 
         currentNode = 0
         while currentNode != self.__solution[-1]:
@@ -774,13 +790,15 @@ class Solver(object):
                     
         ax.plot(x, y, marker='o', color=color)
         
+        '''
         # O que esta sendo impresso no grafico
         print()
         print('Solution: ', self.getSolution())
         print('Representation: ', representation)
         print('Truck: ', self.__truckSolution)
         print('Drones: ', drones)
-        print()               
+        print()    
+        '''           
 
 ## funcao auxiliar
 def randomizeLocalSearchs():

@@ -20,24 +20,32 @@ for folder in folders: # Percorre os diretórios da pasta raiz
     reader = TSPDReader1()
 
     reader.read(folder)
+    print('Inicio: ', folder) # Imprime o nome da pasta que está sendo lida
 
     solver = Solver(reader.getTruckMatrix(), reader.getDroneMatrix(), reader.getNodes(), 1, 1, 20)
 
     startTime = time.time()
-    solver.HVMP(1)
+    solver.HVMP(3)
 
     print("inicio da solucao", folder)
-    solver.plotarSolucao(folder + ' in ' + sheetName + ' inicial')
+    
+    #solver.plotarSolucao(folder + ' in ' + sheetName + ' inicial')
+
     arquivo.write("Solucao inicial para: "+ folder + '\n')
     solucao = solver.getSolution()
     for i in range(len(solucao)):
         arquivo.write(str(solucao[i])+' ')
     arquivo.write('\n')
 
-    solver.getDroneDeliveries()
-    print('Inicio: ', folder) 
-    result = solver.droneGrasp(3,1)
-    print('Final: ', folder)
+    #solver.getDroneDeliveries()
+    
+    print("Create Representation")
+    solver.createRepresentation()
+
+    result = solver.droneGrasp(5,3)
+
+
+    
     endTime = time.time()
 
     arquivo.write("Solucao final para: "+ folder + '\n')
@@ -51,4 +59,6 @@ for folder in folders: # Percorre os diretórios da pasta raiz
 
     sheet1.append((folder, result, endTime - startTime))
     sheet.save(sheetName + '.xlsx')
+
+    print('Final: ', folder) # Imprime o nome da pasta que está sendo lida
 arquivo.close()

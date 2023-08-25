@@ -1,4 +1,13 @@
 Solucao inicial para: prv14
-0 10 13 7 12 8 2 6 9 5 3 4 11 1 14 
-Solucao final para: prv14
-0 1 13 7 12 11 4 3 6 9 5 2 8 10 14 
+0 13 10 9 5 2 8 inicio da solucao prv14
+Inicio:  prv14
+Tempo da solução ótima:  False
+Tempo da solução ótima:  False
+18.5
+Final:  prv14
+
+Solution:  [0, 13, 1, 7, 12, 11, 8, 2, 4, 3, 6, 5, 9, 10, 14]
+Representation:  [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0]
+Truck:  [0, 1, 7, 12, 11, 8, 2, 4, 3, 6, 5, 9, 10, 14]
+Drones:  [[0, 13, 10]]
+
